@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>印章客製填寫｜字型預覽</title>
+
+<style>
+/* ===== 字型載入（字型檔與 HTML 同一層；檔名需一致）===== */
+@font-face{font-family:"標楷體";src:url("標楷體.ttf");font-display:swap;}
+@font-face{font-family:"落落補｜時光體";src:url("落落補-時光體.ttf");font-display:swap;}
+@font-face{font-family:"靈動指書手札字體";src:url("靈動指書手札字體.ttf");font-display:swap;}
+@font-face{font-family:"華康布丁體W7(P)";src:url("華康布丁體W7P.ttf");font-display:swap;}
+@font-face{font-family:"華康古印體(P)";src:url("華康古印體P.TTF");font-display:swap;}
+@font-face{font-family:"華康皮皮體W5";src:url("華康皮皮體W5.ttc");font-display:swap;}
+@font-face{font-family:"華康娃娃體(P)";src:url("華康娃娃體P.ttf");font-display:swap;}
+@font-face{font-family:"小豆島黑體繁";src:url("小豆島黑體繁.ttf");font-display:swap;}
+@font-face{font-family:"錢塘細筆字";src:url("錢塘細筆字.ttf");font-display:swap;}
+@font-face{font-family:"王漢宗中行書繁";src:url("王漢宗中行書繁.ttf");font-display:swap;}
+@font-face{font-family:"蘭亭集序書法字體";src:url("蘭亭集序書法字體.ttf");font-display:swap;}
+@font-face{font-family:"云起手寫細書體(繁)";src:url("云起手寫細書體.ttf");font-display:swap;}
+
+:root{
+  --sky1:#eaf3ff; --sky2:#cfe3ff;
+  --card:#ffffff; --line:#bcd6ff;
+  --primary:#2f7cff; --gray:#6c7b95;
+  --warnBg:#fff4d6; --warnLine:#ffd36a;
+  --ink:#1f2a3a;
+}
+
+*{box-sizing:border-box;}
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,"PingFang TC","Microsoft JhengHei",sans-serif;
+  color:var(--ink);
+  background:
+    radial-gradient(circle at 20% 10%, #fff 2px, transparent 2px) 0 0/42px 42px,
+    radial-gradient(circle at 70% 30%, #fff 2px, transparent 2px) 0 0/56px 56px,
+    linear-gradient(180deg,var(--sky1),var(--sky2));
+  min-height:100vh;
+}
+
+.wrap{max-width:1100px;margin:28px auto;padding:0 16px;}
+.panel{
+  background:rgba(248,251,255,.92);
+  border-radius:18px;
+  padding:18px;
+  box-shadow:0 18px 40px rgba(0,0,0,.08);
+  backdrop-filter: blur(6px);
+}
+
+.top{
+  display:flex; justify-content:space-between; align-items:flex-start;
+  gap:12px; flex-wrap:wrap;
+}
+h1{margin:0;font-size:26px;}
+.sub{margin:6px 0 0;color:#334;font-weight:700;}
+.badge{
+  padding:8px 12px;border-radius:999px;background:#fff;border:2px solid #d7e6ff;
+  font-weight:900; white-space:nowrap;
+}
+
+.form{
+  margin-top:14px;
+  background:#fff;
+  border:2px solid #d7e6ff;
+  border-radius:16px;
+  padding:14px;
+}
+.formGrid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+@media (max-width:760px){
+  .formGrid{grid-template-columns:1fr;}
+}
+.field{display:flex;flex-direction:column;gap:6px;}
+label{font-weight:900;}
+input[type="text"], textarea, select{
+  width:100%;
+  border:2px solid #c7ddff;
+  border-radius:12px;
+  padding:12px 12px;
+  font-size:16px;
+  outline:none;
+  background:#fff;
+}
+textarea{min-height:80px;resize:vertical;}
+
+.inline{
+  display:flex; gap:10px; align-items:center; flex-wrap:wrap;
+  padding:10px 12px; border:2px solid #c7ddff; border-radius:12px;
+}
+.inline label{font-weight:800;}
+.inline input{transform:translateY(1px);}
+
+.rowActions{
+  margin-top:12px;
+  display:flex; gap:10px; flex-wrap:wrap;
+  align-items:center; justify-content:space-between;
+}
+.status{
+  font-weight:900;
+  background:#f3f9ff;
+  border:2px solid #d7e6ff;
+  padding:10px 12px;
+  border-radius:12px;
+  flex:1;
+}
+.actions{display:flex;gap:10px;flex-wrap:wrap;}
+button{
+  border:0;border-radius:999px;padding:10px 14px;
+  cursor:pointer;font-weight:900;font-size:14px;
+}
+.btnPrimary{background:var(--primary);color:#fff;}
+.btnGray{background:var(--gray);color:#fff;}
+.btnOutline{
+  background:#fff; border:2px solid #d7e6ff; color:#123;
+}
+
+.mainPreview{
+  margin-top:14px;
+  background:#fff;
+  border:2px solid #9fc2ff;
+  border-radius:14px;
+  padding:16px;
+}
+.previewTitle{
+  display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;
+  font-weight:1000;
+}
+.bigText{
+  margin-top:10px;
+  min-height:74px;
+  font-size:60px;
+  line-height:1.2;
+  word-break:break-word;
+}
+.small{
+  font-size:12px; color:#566; font-weight:800;
+}
+
+.note{
+  margin-top:14px;
+  background:var(--warnBg);
+  border:2px solid var(--warnLine);
+  padding:12px 14px;
+  border-radius:12px;
+  font-weight:900;
+}
+
+.grid{
+  margin-top:16px;
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
+  gap:14px;
+}
+.card{
+  background:rgba(255,255,255,.92);
+  border:2px dashed var(--line);
+  border-radius:14px;
+  padding:12px;
+}
+.card.selected{
+  border:2px solid var(--primary);
+  box-shadow:0 12px 25px rgba(47,124,255,.18);
+}
+.cardTop{
+  display:flex;justify-content:space-between;align-items:center;gap:10px;
+}
+.fontName{font-weight:1000;}
+.tag{
+  font-size:12px;font-weight:900;color:#456;background:#eef6ff;border:1px solid #d7e9ff;
+  padding:4px 8px;border-radius:999px;white-space:nowrap;
+}
+.sample{
+  margin-top:10px;
+  font-size:40px;
+  min-height:56px;
+  line-height:1.2;
+  word-break:break-word;
+}
+.cardBtns{margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;}
+.cardBtns button{padding:8px 12px;font-size:13px;}
+
+.toast{
+  position:fixed;left:50%;bottom:18px;transform:translateX(-50%);
+  background:#111;color:#fff;padding:10px 14px;border-radius:999px;
+  font-weight:900;opacity:0;pointer-events:none;transition:.18s;
+}
+.toast.show{opacity:.9;}
+</style>
+</head>
+
+<body>
+<div class="wrap">
+  <div class="panel">
+
+    <div class="top">
+      <div>
+        <h1>印章客製填寫＋字型預覽</h1>
+        <div class="sub">填資料 → 選字體 → 一鍵複製「字體名稱」回覆給客服</div>
+      </div>
+      <div class="badge">初心畫具｜手作印章</div>
+    </div>
+
+    <!-- ===== 表單區 ===== -->
+    <div class="form">
+      <div class="formGrid">
+        <!-- 1 外殼 -->
+        <div class="field">
+          <label for="shell">1️⃣ 印章外殼款式／顏色（自填）</label>
+          <input id="shell" type="text" placeholder="例如：梅花外殼／粉色、方形外殼／黑色…" />
+        </div>
+
+        <!-- 4 印油 -->
+        <div class="field">
+          <label for="ink">4️⃣ 印油顏色（下拉）</label>
+          <select id="ink">
+            <option value="紅色">紅色</option>
+            <option value="藍色">藍色</option>
+            <option value="黑色" selected>黑色</option>
+            <option value="紫色">紫色</option>
+            <option value="金黃色">金黃色</option>
+          </select>
+        </div>
+
+        <!-- 2 刻印內容 + 外框 -->
+        <div class="field" style="grid-column:1/-1;">
+          <label for="content">2️⃣ 刻印內容（自填）</label>
+          <textarea id="content" placeholder="請輸入要刻印的文字（可換行）">王小明</textarea>
+
+          <div class="inline" style="margin-top:8px;">
+            <span style="font-weight:900;">是否需加外框：</span>
+            <label><input type="radio" name="frame" value="有外框" checked> 有外框</label>
+            <label><input type="radio" name="frame" value="無外框"> 無外框</label>
+          </div>
+        </div>
+
+        <!-- 3 字體 -->
+        <div class="field" style="grid-column:1/-1;">
+          <label for="fontField">3️⃣ 字體（自填/會自動帶入你選的字體，給圖片製作請直接寫-給圖片~並於聊聊或是備註提供）</label>
+          <input id="fontField" type="text" placeholder="例如：標楷體、行書體、布丁體…" />
+          <div class="small">提示：你在下方選字體後，這欄會自動填入；也可以手動改。</div>
+        </div>
+      </div>
+
+      <div class="rowActions">
+        <div class="status" id="status">目前選擇字體：尚未選擇（可在下方點選字體）</div>
+        <div class="actions">
+          <button class="btnPrimary" type="button" id="copyFontBtn">複製字體名稱</button>
+          <button class="btnOutline" type="button" id="copyAllBtn">複製整段填寫內容</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== 主預覽（跟著刻印內容/字體變）===== -->
+    <div class="mainPreview">
+      <div class="previewTitle">
+        <div>主預覽（套用你選的字體）</div>
+        <div class="small">客人也可以截圖這一塊給你確認</div>
+      </div>
+      <div id="bigText" class="bigText">王小明</div>
+    </div>
+
+    <div class="note">提醒：客製商品需排版確認後製作，字體確認後不可更改。請注意請提供完整資料聊聊提供或是下單備註!否則就算下單了也無法製作出貨感謝配合~謝謝!</div>
+
+    <!-- ===== 字型卡片 ===== -->
+    <div class="grid" id="grid"></div>
+
+  </div>
+</div>
+
+<div class="toast" id="toast">已複製</div>
+
+<script>
+const FONT_LIST = [
+  { name:"標楷體", tag:"楷書" },
+  { name:"落落補｜時光體", tag:"手寫" },
+  { name:"靈動指書手札字體", tag:"手札" },
+  { name:"華康布丁體W7(P)", tag:"可愛" },
+  { name:"華康古印體(P)", tag:"古印" },
+  { name:"華康皮皮體W5", tag:"俏皮" },
+  { name:"華康娃娃體(P)", tag:"童趣" },
+  { name:"小豆島黑體繁", tag:"黑體" },
+  { name:"錢塘細筆字", tag:"細筆" },
+  { name:"王漢宗中行書繁", tag:"行書" },
+  { name:"蘭亭集序書法字體", tag:"書法" },
+  { name:"云起手寫細書體(繁)", tag:"細書" },
+];
+
+const shellEl = document.getElementById("shell");
+const inkEl = document.getElementById("ink");
+const contentEl = document.getElementById("content");
+const fontFieldEl = document.getElementById("fontField");
+const statusEl = document.getElementById("status");
+const bigTextEl = document.getElementById("bigText");
+const grid = document.getElementById("grid");
+const toast = document.getElementById("toast");
+const copyFontBtn = document.getElementById("copyFontBtn");
+const copyAllBtn = document.getElementById("copyAllBtn");
+
+let selectedFont = "";
+
+function showToast(msg){
+  toast.textContent = msg;
+  toast.classList.add("show");
+  setTimeout(()=>toast.classList.remove("show"), 1200);
+}
+
+async function copyToClipboard(text){
+  try{
+    await navigator.clipboard.writeText(text);
+    return true;
+  }catch(e){
+    // fallback
+    try{
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+      return true;
+    }catch{
+      return false;
+    }
+  }
+}
+
+function getFrameValue(){
+  const r = document.querySelector('input[name="frame"]:checked');
+  return r ? r.value : "（未選）";
+}
+
+function updatePreview(){
+  const text = contentEl.value || "";
+  bigTextEl.textContent = text;
+
+  // 主預覽字體（若有選到就套用）
+  if(selectedFont){
+    bigTextEl.style.fontFamily = `'${selectedFont}'`;
+  }else{
+    bigTextEl.style.fontFamily = '';
+  }
+
+  // 卡片示例文字
+  document.querySelectorAll(".sample").forEach(p=>{
+    p.textContent = text;
+  });
+}
+
+function setSelectedFont(fontName){
+  selectedFont = fontName;
+  fontFieldEl.value = fontName; // 自動帶入欄位
+  statusEl.textContent = `目前選擇字體：${fontName}（可按「複製字體名稱」回覆客服）`;
+  updatePreview();
+
+  // 高亮卡片
+  document.querySelectorAll(".card").forEach(c => c.classList.remove("selected"));
+  const card = document.querySelector(`.card[data-font="${CSS.escape(fontName)}"]`);
+  if(card) card.classList.add("selected");
+}
+
+function buildCards(){
+  grid.innerHTML = "";
+  FONT_LIST.forEach(f=>{
+    const card = document.createElement("div");
+    card.className = "card";
+    card.setAttribute("data-font", f.name);
+    card.innerHTML = `
+      <div class="cardTop">
+        <div class="fontName">${f.name}</div>
+        <div class="tag">${f.tag}</div>
+      </div>
+      <div class="sample" style="font-family:'${f.name}'"></div>
+      <div class="cardBtns">
+        <button class="btnPrimary" type="button">選用此字體</button>
+        <button class="btnOutline" type="button">複製字體名稱</button>
+      </div>
+    `;
+    // 綁事件
+    const [btnPick, btnCopy] = card.querySelectorAll("button");
+    btnPick.addEventListener("click", ()=> {
+      setSelectedFont(f.name);
+      showToast(`已選：${f.name}`);
+    });
+    btnCopy.addEventListener("click", async ()=> {
+      const ok = await copyToClipboard(f.name);
+      showToast(ok ? `已複製字體：${f.name}` : "複製失敗");
+    });
+
+    grid.appendChild(card);
+  });
+}
+
+copyFontBtn.addEventListener("click", async ()=>{
+  const fontName = (fontFieldEl.value || "").trim() || selectedFont;
+  if(!fontName){
+    showToast("請先選字體或填入字體名稱");
+    return;
+  }
+  const ok = await copyToClipboard(fontName);
+  showToast(ok ? `已複製字體：${fontName}` : "複製失敗");
+});
+
+copyAllBtn.addEventListener("click", async ()=>{
+  const payload =
+`印章外殼款式／顏色：${shellEl.value || "（未填）"}
+刻印內容：${contentEl.value || "（未填）"}
+外框：${getFrameValue()}
+字體：${(fontFieldEl.value || selectedFont || "（未填）")}
+印油顏色：${inkEl.value || "（未選）"}`;
+
+  const ok = await copyToClipboard(payload);
+  showToast(ok ? "已複製整段填寫內容" : "複製失敗");
+});
+
+contentEl.addEventListener("input", updatePreview);
+document.querySelectorAll('input[name="frame"]').forEach(r=>r.addEventListener("change", ()=>{}));
+buildCards();
+updatePreview();
+</script>
+</body>
+</html>
