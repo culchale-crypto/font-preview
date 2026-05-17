@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>印章客製填寫｜字型預覽</title>
+<title>初心畫具｜客製化印章字型預覽</title>
 
 <style>
 /* ===== 字型載入（字型檔與 HTML 同一層；檔名需一致）===== */
@@ -20,176 +20,186 @@
 @font-face{font-family:"蘭亭集序書法字體";src:url("蘭亭集序書法字體.ttf");font-display:swap;}
 @font-face{font-family:"云起手寫細書體(繁)";src:url("云起手寫細書體.ttf");font-display:swap;}
 
-:root{
-  --sky1:#eaf3ff; --sky2:#cfe3ff;
-  --card:#ffffff; --line:#bcd6ff;
-  --primary:#2f7cff; --gray:#6c7b95;
-  --warnBg:#fff4d6; --warnLine:#ffd36a;
-  --ink:#1f2a3a;
+:root {
+  /* 韓系奶油配色與原木質感 */
+  --bg-color: #FDFBF7;    
+  --card: #FFFFFF;        
+  --primary: #C4A77D;     
+  --primary-hover: #b09269;
+  --line: #E8E3DB;        
+  --text-main: #5A4E43;   
+  --text-light: #8C7E71;
+  --warnBg: #F9F1E6;      
+  --warnLine: #E8D3B9;
+  --brand-green: #8A9A86; /* 溫潤的鼠尾草綠點綴 */
 }
 
-*{box-sizing:border-box;}
-body{
-  margin:0;
-  font-family:system-ui,-apple-system,"PingFang TC","Microsoft JhengHei",sans-serif;
-  color:var(--ink);
-  background:
-    radial-gradient(circle at 20% 10%, #fff 2px, transparent 2px) 0 0/42px 42px,
-    radial-gradient(circle at 70% 30%, #fff 2px, transparent 2px) 0 0/56px 56px,
-    linear-gradient(180deg,var(--sky1),var(--sky2));
-  min-height:100vh;
+* { box-sizing: border-box; }
+body {
+  margin: 0; font-family: system-ui, -apple-system, "PingFang TC", "Microsoft JhengHei", sans-serif;
+  color: var(--text-main); background-color: var(--bg-color);
+  background-image: radial-gradient(circle at 50% 50%, #f4eee6 2px, transparent 2px);
+  background-size: 32px 32px; min-height: 100vh;
+  display: flex; flex-direction: column;
 }
 
-.wrap{max-width:1100px;margin:28px auto;padding:0 16px;}
-.panel{
-  background:rgba(248,251,255,.92);
-  border-radius:18px;
-  padding:18px;
-  box-shadow:0 18px 40px rgba(0,0,0,.08);
-  backdrop-filter: blur(6px);
+.wrap { max-width: 1100px; margin: 0 auto; padding: 28px 16px; flex: 1; width: 100%; }
+
+/* ===== 新增：品牌感 Header ===== */
+.brand-header {
+  text-align: center;
+  margin-bottom: 24px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--line);
+}
+.brand-name {
+  font-size: 28px;
+  font-weight: 900;
+  color: var(--text-main);
+  letter-spacing: 4px;
+  margin: 0 0 8px 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+.brand-name::before, .brand-name::after {
+  content: "";
+  display: block;
+  width: 24px;
+  height: 2px;
+  background-color: var(--brand-green);
+  opacity: 0.6;
+}
+.brand-subtitle {
+  font-size: 13px;
+  color: var(--brand-green);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+.brand-intro {
+  font-size: 15px;
+  color: var(--text-light);
+  line-height: 1.6;
+  margin: 0;
+  font-weight: 500;
 }
 
-.top{
-  display:flex; justify-content:space-between; align-items:flex-start;
-  gap:12px; flex-wrap:wrap;
-}
-h1{margin:0;font-size:26px;}
-.sub{margin:6px 0 0;color:#334;font-weight:700;}
-.badge{
-  padding:8px 12px;border-radius:999px;background:#fff;border:2px solid #d7e6ff;
-  font-weight:900; white-space:nowrap;
+.panel {
+  background: rgba(255, 255, 255, 0.95); border-radius: 20px;
+  padding: 32px; box-shadow: 0 12px 36px rgba(90, 78, 67, 0.05); border: 1px solid var(--line);
 }
 
-.form{
-  margin-top:14px;
-  background:#fff;
-  border:2px solid #d7e6ff;
-  border-radius:16px;
-  padding:14px;
+.form { background: var(--bg-color); border: 1px solid var(--line); border-radius: 16px; padding: 20px; }
+.formGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+@media (max-width: 760px) { 
+  .formGrid { grid-template-columns: 1fr; } 
+  .panel { padding: 20px; }
 }
-.formGrid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
+.field { display: flex; flex-direction: column; gap: 8px; }
+label { font-weight: 700; color: var(--text-main); font-size: 15px; }
+input[type="text"], textarea, select {
+  width: 100%; border: 1px solid var(--line); border-radius: 12px;
+  padding: 14px; font-size: 16px; outline: none; background: #fff; color: var(--text-main); transition: 0.2s;
 }
-@media (max-width:760px){
-  .formGrid{grid-template-columns:1fr;}
+input[type="text"]:focus, textarea:focus, select:focus {
+  border-color: var(--primary); box-shadow: 0 0 0 3px rgba(196, 167, 125, 0.15);
 }
-.field{display:flex;flex-direction:column;gap:6px;}
-label{font-weight:900;}
-input[type="text"], textarea, select{
-  width:100%;
-  border:2px solid #c7ddff;
-  border-radius:12px;
-  padding:12px 12px;
-  font-size:16px;
-  outline:none;
-  background:#fff;
-}
-textarea{min-height:80px;resize:vertical;}
+textarea { min-height: 80px; resize: vertical; }
 
-.inline{
-  display:flex; gap:10px; align-items:center; flex-wrap:wrap;
-  padding:10px 12px; border:2px solid #c7ddff; border-radius:12px;
-}
-.inline label{font-weight:800;}
-.inline input{transform:translateY(1px);}
+.inline { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; padding: 10px 14px; border: 1px solid var(--line); border-radius: 12px; background: #fff; }
+.inline label { font-weight: 500; cursor: pointer; }
+.inline input { transform: translateY(1px); accent-color: var(--primary); }
 
-.rowActions{
-  margin-top:12px;
-  display:flex; gap:10px; flex-wrap:wrap;
-  align-items:center; justify-content:space-between;
+.ink-group { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 4px; }
+.ink-card { flex: 1; min-width: 180px; position: relative; cursor: pointer; }
+.ink-card input { position: absolute; opacity: 0; cursor: pointer; }
+.ink-body {
+  border: 2px solid var(--line); background: #fff; border-radius: 12px; padding: 12px; text-align: center; transition: 0.2s; display: flex; flex-direction: column; gap: 4px;
 }
-.status{
-  font-weight:900;
-  background:#f3f9ff;
-  border:2px solid #d7e6ff;
-  padding:10px 12px;
-  border-radius:12px;
-  flex:1;
-}
-.actions{display:flex;gap:10px;flex-wrap:wrap;}
-button{
-  border:0;border-radius:999px;padding:10px 14px;
-  cursor:pointer;font-weight:900;font-size:14px;
-}
-.btnPrimary{background:var(--primary);color:#fff;}
-.btnGray{background:var(--gray);color:#fff;}
-.btnOutline{
-  background:#fff; border:2px solid #d7e6ff; color:#123;
-}
+.ink-body strong { font-size: 16px; color: var(--text-main); }
+.ink-body span { font-size: 12px; color: var(--text-light); }
+.ink-card input:checked + .ink-body { border-color: var(--primary); background: #fbf7f2; box-shadow: 0 4px 12px rgba(196, 167, 125, 0.15); }
+.ink-card input:checked + .ink-body strong { color: #A67C43; }
+.ink-card.danger input:checked + .ink-body { border-color: #D63030; background: #FFF0F0; }
+.ink-card.danger input:checked + .ink-body strong { color: #D63030; }
 
-.mainPreview{
-  margin-top:14px;
-  background:#fff;
-  border:2px solid #9fc2ff;
-  border-radius:14px;
-  padding:16px;
-}
-.previewTitle{
-  display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;
-  font-weight:1000;
-}
-.bigText{
-  margin-top:10px;
-  min-height:74px;
-  font-size:60px;
-  line-height:1.2;
-  word-break:break-word;
-}
-.small{
-  font-size:12px; color:#566; font-weight:800;
-}
+.rowActions { margin-top: 20px; display: flex; flex-direction: column; gap: 16px; }
+.status-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; justify-content: space-between; }
+.status { font-weight: 700; background: #fff; border: 1px solid var(--line); padding: 12px 16px; border-radius: 12px; flex: 1; color: var(--primary); font-size: 16px; }
+button { border: 0; border-radius: 999px; padding: 12px 20px; cursor: pointer; font-weight: 700; font-size: 15px; letter-spacing: 0.5px; transition: 0.2s; }
+.btnOutline { background: #fff; border: 1px solid var(--primary); color: var(--primary); }
+.btnOutline:hover { background: var(--bg-color); }
 
-.note{
-  margin-top:14px;
-  background:var(--warnBg);
-  border:2px solid var(--warnLine);
-  padding:12px 14px;
-  border-radius:12px;
-  font-weight:900;
+.liability-check {
+  background: #FFF5F5; border: 2px dashed #E74C3C; padding: 16px; border-radius: 12px; display: flex; align-items: flex-start; gap: 12px; cursor: pointer; transition: 0.3s;
 }
+.liability-check:hover { background: #ffebeb; }
+.liability-check input[type="checkbox"] { width: 24px; height: 24px; margin-top: 2px; cursor: pointer; accent-color: #E74C3C; }
+.liability-check .check-text { font-size: 16px; font-weight: 700; color: #C0392B; line-height: 1.5; }
+.liability-check .check-text span { font-size: 13px; font-weight: 500; color: #5A4E43; display: block; margin-top: 4px; }
 
-.grid{
-  margin-top:16px;
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
-  gap:14px;
+.btnGiant {
+  width: 100%; background: #E27B58; color: #fff; font-size: 20px; padding: 18px 20px; border-radius: 16px; font-weight: 900; border: 2px solid #C45F3D; cursor: pointer; box-shadow: 0 8px 20px rgba(226, 123, 88, 0.4); animation: copyPulse 1.5s infinite; letter-spacing: 1px;
 }
-.card{
-  background:rgba(255,255,255,.92);
-  border:2px dashed var(--line);
-  border-radius:14px;
-  padding:12px;
-}
-.card.selected{
-  border:2px solid var(--primary);
-  box-shadow:0 12px 25px rgba(47,124,255,.18);
-}
-.cardTop{
-  display:flex;justify-content:space-between;align-items:center;gap:10px;
-}
-.fontName{font-weight:1000;}
-.tag{
-  font-size:12px;font-weight:900;color:#456;background:#eef6ff;border:1px solid #d7e9ff;
-  padding:4px 8px;border-radius:999px;white-space:nowrap;
-}
-.sample{
-  margin-top:10px;
-  font-size:40px;
-  min-height:56px;
-  line-height:1.2;
-  word-break:break-word;
-}
-.cardBtns{margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;}
-.cardBtns button{padding:8px 12px;font-size:13px;}
+.btnGiant:hover:not(:disabled) { background: #C45F3D; transform: translateY(-2px); box-shadow: 0 12px 25px rgba(226, 123, 88, 0.5); }
+.btnGiant:disabled { background: #D5D0C9; border-color: #C0BBB4; color: #9A948C; cursor: not-allowed; box-shadow: none; animation: none; }
 
-.toast{
-  position:fixed;left:50%;bottom:18px;transform:translateX(-50%);
-  background:#111;color:#fff;padding:10px 14px;border-radius:999px;
-  font-weight:900;opacity:0;pointer-events:none;transition:.18s;
+.shake-animation { animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both; }
+@keyframes shake { 10%, 90% { transform: translate3d(-1px, 0, 0); } 20%, 80% { transform: translate3d(2px, 0, 0); } 30%, 50%, 70% { transform: translate3d(-4px, 0, 0); } 40%, 60% { transform: translate3d(4px, 0, 0); } }
+@keyframes copyPulse { 0% { box-shadow: 0 0 0 0 rgba(226, 123, 88, 0.6); } 70% { box-shadow: 0 0 0 15px rgba(226, 123, 88, 0); } 100% { box-shadow: 0 0 0 0 rgba(226, 123, 88, 0); } }
+
+.mainPreview {
+  margin-top: 24px; background: #fff; border: 2px dashed var(--primary); border-radius: 16px; padding: 32px 24px; position: relative; overflow: hidden; user-select: none; 
 }
-.toast.show{opacity:.9;}
+.mainPreview::after {
+  content: "僅供預覽・請勿截圖"; position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex; align-items: center; justify-content: center; font-size: 40px; font-weight: 900; color: rgba(196, 167, 125, 0.08); transform: rotate(-10deg); pointer-events: none; z-index: 10; white-space: nowrap; letter-spacing: 4px;
+}
+.previewTitle { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; font-weight: 700; position: relative; z-index: 2; color: var(--primary); }
+.bigText { margin-top: 20px; min-height: 90px; font-size: 72px; line-height: 1.2; word-break: break-word; color: var(--text-main); text-align: center; position: relative; z-index: 2; }
+
+.indelible-warning { margin-top: 10px; background: #FFF4D6; border: 2px solid #FFD36A; padding: 12px 16px; border-radius: 12px; font-size: 14px; color: #B27300; line-height: 1.5; display: none; }
+.indelible-warning b { color: #D63030; }
+
+.font-check-box {
+  margin-top: 8px; background: #fff5f5; border: 2px dashed #e74c3c; padding: 12px 16px; border-radius: 12px; display: none; gap: 12px; align-items: flex-start; animation: dropDown 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+@keyframes dropDown { 0% { opacity: 0; transform: translateY(-10px); } 100% { opacity: 1; transform: translateY(0); } }
+.font-check-box .icon { font-size: 28px; animation: wobble 1s infinite; }
+@keyframes wobble { 0%, 100% { transform: rotate(-10deg) scale(1); } 50% { transform: rotate(10deg) scale(1.1); } }
+.font-check-box .content { font-size: 14px; color: #c0392b; line-height: 1.5; }
+.font-check-box .content b { font-size: 15px; color: #900; background: #ffcccc; padding: 2px 4px; border-radius: 4px;}
+
+.small { font-size: 13px; color: var(--text-light); font-weight: 500; }
+
+.grid { margin-top: 24px; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+.card { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 18px; transition: 0.3s; }
+.card:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(90, 78, 67, 0.08); }
+.card.selected { border: 2px solid var(--primary); background: var(--bg-color); box-shadow: 0 8px 24px rgba(196, 167, 125, 0.15); }
+.cardTop { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.fontName { font-weight: 700; color: var(--text-main); font-size: 16px; }
+.tag { font-size: 12px; font-weight: 600; color: var(--brand-green); background: rgba(138, 154, 134, 0.1); border: 1px solid rgba(138, 154, 134, 0.3); padding: 4px 10px; border-radius: 999px; white-space: nowrap; }
+.sample { margin-top: 16px; font-size: 46px; min-height: 60px; line-height: 1.2; word-break: break-word; text-align: center; color: var(--text-main); }
+.cardBtns { margin-top: 16px; display: flex; gap: 8px; flex-wrap: wrap; }
+.cardBtns button { padding: 10px 14px; font-size: 14px; flex: 1; }
+
+.toast {
+  position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 20px); background: rgba(90, 78, 67, 0.95); color: #fff; padding: 16px 28px; border-radius: 999px; font-weight: 700; opacity: 0; pointer-events: none; transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55); box-shadow: 0 8px 24px rgba(0,0,0,0.2); letter-spacing: 1px; z-index: 999; font-size: 16px;
+}
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+/* ===== 新增：專業版 Footer ===== */
+.brand-footer {
+  text-align: center;
+  padding: 32px 16px;
+  margin-top: 20px;
+  color: var(--text-light);
+  font-size: 13px;
+  line-height: 1.8;
+}
+.brand-footer p { margin: 0; }
+.brand-footer .copyright { margin-top: 8px; font-size: 12px; opacity: 0.8; }
 </style>
 </head>
 
@@ -197,37 +207,47 @@ button{
 <div class="wrap">
   <div class="panel">
 
-    <div class="top">
-      <div>
-        <h1>印章客製填寫＋字型預覽</h1>
-        <div class="sub">填資料 → 選字體 → 一鍵複製「字體名稱」回覆給客服</div>
-      </div>
-      <div class="badge">初心畫具｜手作印章</div>
+    <div class="brand-header">
+      <h1 class="brand-name">初心畫具</h1>
+      <div class="brand-subtitle">Artisan Handmade Stamps</div>
+      <p class="brand-intro">每一枚印章，都是為您專屬訂製的溫度。<br>請跟著下方步驟，挑選最適合您的字體與細節。</p>
     </div>
 
-    <!-- ===== 表單區 ===== -->
     <div class="form">
       <div class="formGrid">
-        <!-- 1 外殼 -->
         <div class="field">
           <label for="shell">1️⃣ 印章外殼款式／顏色（自填）</label>
           <input id="shell" type="text" placeholder="例如：梅花外殼／粉色、方形外殼／黑色…" />
         </div>
 
-        <!-- 4 印油 -->
         <div class="field">
-          <label for="ink">4️⃣ 印油顏色（下拉）</label>
-          <select id="ink">
-            <option value="紅色">紅色</option>
-            <option value="藍色">藍色</option>
-            <option value="黑色" selected>黑色</option>
-            <option value="紫色">紫色</option>
-            <option value="墨綠色">墨綠色</option>
-            <option value="微珠光金黃色(無螢光效果)">微珠光金黃色(無螢光效果)</option>
-          </select>
+          <label>4️⃣ 印油種類與顏色</label>
+          <div class="ink-group">
+            <label class="ink-card">
+              <input type="radio" name="inkType" value="一般光敏印油" checked>
+              <div class="ink-body">
+                <strong>一般光敏印油</strong>
+                <span>推薦！適合紙張/好保養</span>
+              </div>
+            </label>
+            <label class="ink-card danger">
+              <input type="radio" name="inkType" value="特殊速乾不滅印油">
+              <div class="ink-body">
+                <strong>速乾不滅印油</strong>
+                <span style="color:#c0392b; font-weight:bold;">限滑面材質</span>
+              </div>
+            </label>
+          </div>
+          
+          <select id="ink" style="margin-top: 8px;">
+            </select>
+          
+          <div id="indelibleWarning" class="indelible-warning">
+            ⚠️ <b>注意！不滅印油操作難度較高：</b><br>
+            因墨水具備極速乾燥特性，主要用於無法吸墨的滑面材質。若無頻繁使用或保養不當，<b>極易造成印章表面堵塞硬化報銷</b>。若您只是要蓋在一般紙張上，請務必改選「一般光敏印油」！
+          </div>
         </div>
 
-        <!-- 2 刻印內容 + 外框 -->
         <div class="field" style="grid-column:1/-1;">
           <label for="content">2️⃣ 刻印內容（自填）</label>
           <textarea id="content" placeholder="請輸入要刻印的文字（可換行）">王小明</textarea>
@@ -239,37 +259,53 @@ button{
           </div>
         </div>
 
-        <!-- 3 字體 -->
         <div class="field" style="grid-column:1/-1;">
-          <label for="fontField">3️⃣ 字體（自填/會自動帶入你選的字體，給圖片製作請直接寫-給圖片~並於聊聊或是備註提供）</label>
+          <label for="fontField">3️⃣ 字體（自填/自動帶入）</label>
           <input id="fontField" type="text" placeholder="例如：標楷體、行書體、布丁體…" />
-          <div class="small">提示：你在下方選字體後，這欄會自動填入；也可以手動改。</div>
+          
+          <div id="fontCheckWarning" class="font-check-box">
+            <div class="icon">🚨</div>
+            <div class="content">
+              <strong>【重要確認】請檢查下方主預覽區！</strong><br>
+              您的名字是否有出現：<b>字體風格不一樣(混到一般粗黑體)</b>、<b>空白</b>、或 <b>方框□</b>？<br>
+              如果有的話，代表該字體<span style="text-decoration: underline;">不支援您的名字（缺字）</span>，強行製作會變亂碼，<strong>請務必更換字體！</strong>
+            </div>
+          </div>
+          <div class="small" style="margin-top:4px;">提示：你在下方選字體後，這欄會自動填入；若需客製圖案請直接填寫「給圖片」。</div>
         </div>
       </div>
 
       <div class="rowActions">
-        <div class="status" id="status">目前選擇字體：尚未選擇（可在下方點選字體）</div>
-        <div class="actions">
-          <button class="btnPrimary" type="button" id="copyFontBtn">複製字體名稱</button>
-          <button class="btnOutline" type="button" id="copyAllBtn">複製整段填寫內容</button>
+        <div class="status-row">
+          <div class="status" id="status">目前尚未選擇字體</div>
         </div>
+
+        <label class="liability-check" id="liabilityWrapper">
+          <input type="checkbox" id="liabilityCheckbox">
+          <div class="check-text">
+            🙋‍♀️ 我已仔細檢查【主預覽區】的文字，確認字體顯示完全正常！
+            <span>（沒有缺字、沒有變方框、也沒有混入粗黑體等走鐘狀況。若因未檢查導致刻印亂碼，後果由買家承擔。）</span>
+          </div>
+        </label>
+
+        <button class="btnGiant" type="button" id="copyAllBtn" disabled>🔒 請先打勾確認字體正常，才能複製</button>
       </div>
     </div>
 
-    <!-- ===== 主預覽（跟著刻印內容/字體變）===== -->
     <div class="mainPreview">
       <div class="previewTitle">
-        <div>主預覽（套用你選的字體）</div>
-        <div class="small">客人也可以截圖這一塊給你確認</div>
+        <div>主預覽（防截圖區）</div>
       </div>
       <div id="bigText" class="bigText">王小明</div>
     </div>
 
-    <div class="note">提醒：客製商品需排版確認後製作，字體確認後不可更改。請注意請提供完整資料聊聊提供或是下單備註!否則就算下單了也無法製作出貨感謝配合~謝謝!</div>
-
-    <!-- ===== 字型卡片 ===== -->
     <div class="grid" id="grid"></div>
-
+  </div>
+  
+  <div class="brand-footer">
+    <p>初心畫具手作印章・專屬客製化服務</p>
+    <p>如有任何排版或字體問題，歡迎透過賣場聊聊聯繫客服為您處理。</p>
+    <p class="copyright">© 初心畫具 All Rights Reserved.</p>
   </div>
 </div>
 
@@ -291,6 +327,9 @@ const FONT_LIST = [
   { name:"云起手寫細書體(繁)", tag:"細書" },
 ];
 
+const generalColors = ["黑色", "紅色", "藍色", "紫色", "墨綠色", "微珠光金黃色(無螢光效果)"];
+const indelibleColors = ["黑色", "深紅色", "藍色", "紫色"];
+
 const shellEl = document.getElementById("shell");
 const inkEl = document.getElementById("ink");
 const contentEl = document.getElementById("content");
@@ -299,66 +338,72 @@ const statusEl = document.getElementById("status");
 const bigTextEl = document.getElementById("bigText");
 const grid = document.getElementById("grid");
 const toast = document.getElementById("toast");
-const copyFontBtn = document.getElementById("copyFontBtn");
 const copyAllBtn = document.getElementById("copyAllBtn");
+const indelibleWarning = document.getElementById("indelibleWarning");
+const fontCheckWarning = document.getElementById("fontCheckWarning");
+const liabilityCheckbox = document.getElementById("liabilityCheckbox");
+const liabilityWrapper = document.getElementById("liabilityWrapper");
 
 let selectedFont = "";
 
 function showToast(msg){
   toast.textContent = msg;
   toast.classList.add("show");
-  setTimeout(()=>toast.classList.remove("show"), 1200);
+  setTimeout(()=>toast.classList.remove("show"), 2500);
 }
 
 async function copyToClipboard(text){
-  try{
-    await navigator.clipboard.writeText(text);
-    return true;
-  }catch(e){
-    // fallback
-    try{
-      const ta = document.createElement("textarea");
-      ta.value = text;
-      document.body.appendChild(ta);
-      ta.select();
-      document.execCommand("copy");
-      document.body.removeChild(ta);
-      return true;
-    }catch{
-      return false;
-    }
+  try{ await navigator.clipboard.writeText(text); return true; }
+  catch(e){
+    try{ const ta = document.createElement("textarea"); ta.value = text; document.body.appendChild(ta); ta.select(); document.execCommand("copy"); document.body.removeChild(ta); return true; }
+    catch{ return false; }
   }
 }
 
 function getFrameValue(){
-  const r = document.querySelector('input[name="frame"]:checked');
-  return r ? r.value : "（未選）";
+  const r = document.querySelector('input[name="frame"]:checked'); return r ? r.value : "（未選）";
 }
+
+function getInkTypeValue(){
+  const r = document.querySelector('input[name="inkType"]:checked'); return r ? r.value : "一般光敏印油";
+}
+
+function updateInkColorOptions(type) {
+  const currentSelected = inkEl.value; 
+  inkEl.innerHTML = ""; 
+  const options = type === "特殊速乾不滅印油" ? indelibleColors : generalColors;
+  options.forEach(color => {
+    const opt = document.createElement("option"); opt.value = color; opt.textContent = color; inkEl.appendChild(opt);
+  });
+  if (options.includes(currentSelected)) { inkEl.value = currentSelected; } else { inkEl.value = "黑色"; }
+}
+
+document.querySelectorAll('input[name="inkType"]').forEach(radio => {
+  radio.addEventListener('change', (e) => {
+    indelibleWarning.style.display = e.target.value === "特殊速乾不滅印油" ? "block" : "none";
+    updateInkColorOptions(e.target.value);
+  });
+});
 
 function updatePreview(){
   const text = contentEl.value || "";
   bigTextEl.textContent = text;
-
-  // 主預覽字體（若有選到就套用）
-  if(selectedFont){
-    bigTextEl.style.fontFamily = `'${selectedFont}'`;
-  }else{
-    bigTextEl.style.fontFamily = '';
-  }
-
-  // 卡片示例文字
-  document.querySelectorAll(".sample").forEach(p=>{
-    p.textContent = text;
-  });
+  bigTextEl.style.fontFamily = selectedFont ? `'${selectedFont}'` : '';
+  document.querySelectorAll(".sample").forEach(p=>{ p.textContent = text; });
 }
 
 function setSelectedFont(fontName){
   selectedFont = fontName;
-  fontFieldEl.value = fontName; // 自動帶入欄位
-  statusEl.textContent = `目前選擇字體：${fontName}（可按「複製字體名稱」回覆客服）`;
+  fontFieldEl.value = fontName; 
+  statusEl.textContent = `✅ 已選擇字體：${fontName}`;
+  fontCheckWarning.style.display = 'flex';
+  
+  liabilityCheckbox.checked = false;
+  copyAllBtn.disabled = true;
+  copyAllBtn.textContent = "🔒 請先打勾確認字體正常，才能複製";
+
   updatePreview();
 
-  // 高亮卡片
   document.querySelectorAll(".card").forEach(c => c.classList.remove("selected"));
   const card = document.querySelector(`.card[data-font="${CSS.escape(fontName)}"]`);
   if(card) card.classList.add("selected");
@@ -367,57 +412,45 @@ function setSelectedFont(fontName){
 function buildCards(){
   grid.innerHTML = "";
   FONT_LIST.forEach(f=>{
-    const card = document.createElement("div");
-    card.className = "card";
-    card.setAttribute("data-font", f.name);
-    card.innerHTML = `
-      <div class="cardTop">
-        <div class="fontName">${f.name}</div>
-        <div class="tag">${f.tag}</div>
-      </div>
-      <div class="sample" style="font-family:'${f.name}'"></div>
-      <div class="cardBtns">
-        <button class="btnPrimary" type="button">選用此字體</button>
-        <button class="btnOutline" type="button">複製字體名稱</button>
-      </div>
-    `;
-    // 綁事件
-    const [btnPick, btnCopy] = card.querySelectorAll("button");
-    btnPick.addEventListener("click", ()=> {
-      setSelectedFont(f.name);
-      showToast(`已選：${f.name}`);
-    });
-    btnCopy.addEventListener("click", async ()=> {
-      const ok = await copyToClipboard(f.name);
-      showToast(ok ? `已複製字體：${f.name}` : "複製失敗");
-    });
-
+    const card = document.createElement("div"); card.className = "card"; card.setAttribute("data-font", f.name);
+    card.innerHTML = `<div class="cardTop"><div class="fontName">${f.name}</div><div class="tag">${f.tag}</div></div><div class="sample" style="font-family:'${f.name}'"></div><div class="cardBtns"><button class="btnPrimary" type="button" style="width:100%;">選用此字體預覽</button></div>`;
+    const btnPick = card.querySelector("button");
+    btnPick.addEventListener("click", ()=> { setSelectedFont(f.name); });
     grid.appendChild(card);
   });
 }
 
-copyFontBtn.addEventListener("click", async ()=>{
-  const fontName = (fontFieldEl.value || "").trim() || selectedFont;
-  if(!fontName){
-    showToast("請先選字體或填入字體名稱");
-    return;
+liabilityCheckbox.addEventListener("change", (e) => {
+  if (e.target.checked) {
+    copyAllBtn.disabled = false;
+    copyAllBtn.textContent = "📋 點我一鍵複製【整段填寫內容】";
+  } else {
+    copyAllBtn.disabled = true;
+    copyAllBtn.textContent = "🔒 請先打勾確認字體正常，才能複製";
   }
-  const ok = await copyToClipboard(fontName);
-  showToast(ok ? `已複製字體：${fontName}` : "複製失敗");
 });
 
-copyAllBtn.addEventListener("click", async ()=>{
-  const payload =
-`印章外殼款式／顏色：${shellEl.value || "（未填）"}
-刻印內容：${contentEl.value || "（未填）"}
-外框：${getFrameValue()}
-字體：${(fontFieldEl.value || selectedFont || "（未填）")}
-印油顏色：${inkEl.value || "（未選）"}`;
-
+copyAllBtn.addEventListener("click", async (e)=>{
+  if(copyAllBtn.disabled) return; 
+  
+  const payload = `印章外殼款式／顏色：${shellEl.value || "（未填）"}\n刻印內容：${contentEl.value || "（未填）"}\n外框：${getFrameValue()}\n字體：${(fontFieldEl.value || selectedFont || "（未填）")}\n印油種類：${getInkTypeValue()}\n印油顏色：${inkEl.value || "（未選）"}`;
   const ok = await copyToClipboard(payload);
-  showToast(ok ? "已複製整段填寫內容" : "複製失敗");
+  showToast(ok ? "✅ 複製成功！請直接貼上回覆我們～" : "複製失敗");
 });
 
+copyAllBtn.parentElement.addEventListener("click", (e) => {
+    if(copyAllBtn.disabled && e.target === copyAllBtn) {
+        liabilityWrapper.classList.remove("shake-animation");
+        void liabilityWrapper.offsetWidth; 
+        liabilityWrapper.classList.add("shake-animation");
+    }
+});
+
+fontFieldEl.addEventListener("input", () => {
+    fontCheckWarning.style.display = fontFieldEl.value.trim() !== "" ? 'flex' : 'none';
+});
+
+updateInkColorOptions(getInkTypeValue());
 contentEl.addEventListener("input", updatePreview);
 document.querySelectorAll('input[name="frame"]').forEach(r=>r.addEventListener("change", ()=>{}));
 buildCards();
