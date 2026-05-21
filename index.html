@@ -20,6 +20,20 @@
 @font-face{font-family:"蘭亭集序書法字體";src:url("蘭亭集序書法字體.ttf");font-display:swap;}
 @font-face{font-family:"云起手寫細書體(繁)";src:url("云起手寫細書體.ttf");font-display:swap;}
 
+/* ===== 🆕 新增：精選印章適用字體 ===== */
+@font-face{font-family:"JasonHandwriting1-Medium";src:url("JasonHandwriting1-Medium.ttf");font-display:swap;}
+@font-face{font-family:"JasonHandwriting6p";src:url("JasonHandwriting6p.ttf");font-display:swap;}
+@font-face{font-family:"JasonHandwriting8p";src:url("JasonHandwriting8p.ttf");font-display:swap;}
+@font-face{font-family:"Tanugo-TTF-Bold";src:url("Tanugo-TTF-Bold.ttf");font-display:swap;}
+@font-face{font-family:"Tanugo-TTF-Round-Bold";src:url("Tanugo-TTF-Round-Bold.ttf");font-display:swap;}
+@font-face{font-family:"Yomogi-Regular";src:url("Yomogi-Regular.ttf");font-display:swap;}
+@font-face{font-family:"YuseiMagic-Regular";src:url("YuseiMagic-Regular.ttf");font-display:swap;}
+@font-face{font-family:"HachiMaruPop-Regular";src:url("HachiMaruPop-Regular.ttf");font-display:swap;}
+@font-face{font-family:"IngridDarling-Regular";src:url("IngridDarling-Regular.ttf");font-display:swap;}
+@font-face{font-family:"Bonbon-Regular";src:url("Bonbon-Regular.ttf");font-display:swap;}
+@font-face{font-family:"EmilysCandy-Regular";src:url("EmilysCandy-Regular.ttf");font-display:swap;}
+@font-face{font-family:"Ole-Regular";src:url("Ole-Regular.ttf");font-display:swap;}
+
 :root {
   /* 韓系奶油配色與原木質感 */
   --bg-color: #FDFBF7;    
@@ -45,7 +59,7 @@ body {
 
 .wrap { max-width: 1100px; margin: 0 auto; padding: 28px 16px; flex: 1; width: 100%; }
 
-/* ===== 新增：品牌感 Header ===== */
+/* ===== 品牌感 Header ===== */
 .brand-header {
   text-align: center;
   margin-bottom: 24px;
@@ -174,6 +188,7 @@ button { border: 0; border-radius: 999px; padding: 12px 20px; cursor: pointer; f
 .small { font-size: 13px; color: var(--text-light); font-weight: 500; }
 
 .grid { margin-top: 24px; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+.grid { margin-top: 24px; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
 .card { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 18px; transition: 0.3s; }
 .card:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(90, 78, 67, 0.08); }
 .card.selected { border: 2px solid var(--primary); background: var(--bg-color); box-shadow: 0 8px 24px rgba(196, 167, 125, 0.15); }
@@ -189,7 +204,7 @@ button { border: 0; border-radius: 999px; padding: 12px 20px; cursor: pointer; f
 }
 .toast.show { opacity: 1; transform: translate(-50%, 0); }
 
-/* ===== 新增：專業版 Footer ===== */
+/* ===== 專業版 Footer ===== */
 .brand-footer {
   text-align: center;
   padding: 32px 16px;
@@ -325,6 +340,22 @@ const FONT_LIST = [
   { name:"王漢宗中行書繁", tag:"行書" },
   { name:"蘭亭集序書法字體", tag:"書法" },
   { name:"云起手寫細書體(繁)", tag:"細書" },
+  
+  // 🆕 新增精選中日文字體
+  { name:"JasonHandwriting1-Medium", tag:"杰哥手寫" },
+  { name:"JasonHandwriting6p", tag:"杰哥手寫6" },
+  { name:"JasonHandwriting8p", tag:"杰哥手寫8" },
+  { name:"Tanugo-TTF-Bold", tag:"日系角圓體" },
+  { name:"Tanugo-TTF-Round-Bold", tag:"日系圓體" },
+  { name:"Yomogi-Regular", tag:"日系蓬蓬體" },
+  { name:"YuseiMagic-Regular", tag:"日系麥克筆" },
+  { name:"HachiMaruPop-Regular", tag:"日系POP體" },
+  
+  // 🆕 新增精選英文字體
+  { name:"IngridDarling-Regular", tag:"英式浪漫花體" },
+  { name:"Bonbon-Regular", tag:"英式軟糖體" },
+  { name:"EmilysCandy-Regular", tag:"英式糖果體" },
+  { name:"Ole-Regular", tag:"英式復古花體" }
 ];
 
 const generalColors = ["黑色", "紅色", "藍色", "紫色", "墨綠色", "微珠光金黃色(無螢光效果)"];
@@ -398,6 +429,15 @@ function setSelectedFont(fontName){
   statusEl.textContent = `✅ 已選擇字體：${fontName}`;
   fontCheckWarning.style.display = 'flex';
   
+  const contentWarningEl = fontCheckWarning.querySelector('.content');
+  if(["Tanugo-TTF-Bold", "Tanugo-TTF-Round-Bold", "Yomogi-Regular", "YuseiMagic-Regular", "HachiMaruPop-Regular"].includes(fontName)){
+    contentWarningEl.innerHTML = `<strong>【日系字體特別注意】</strong><br>此字體為日型開源字，部分台灣繁體字（如：恆、裏、黃、綠）可能會<b>缺字變回新細明體</b>或<b>變方框</b>。請務必仔細看下方預覽，確認完全正常再打勾！`;
+  } else if(["IngridDarling-Regular", "Bonbon-Regular", "EmilysCandy-Regular", "Ole-Regular"].includes(fontName)){
+    contentWarningEl.innerHTML = `<strong>【純英文字體注意】</strong><br>此字體<b>僅支援英文與數字</b>。如果您輸入中文，預覽區絕對會失真或無法顯示，請確認您的刻印內容為純英文！`;
+  } else {
+    contentWarningEl.innerHTML = `<strong>【重要確認】請檢查下方主預覽區！</strong><br>您的名字是否有出現：<b>字體風格不一樣(混到一般粗黑體)</b>、<b>空白</b>、或 <b>方框□</b>？<br>如果有的話，代表該字體<span style="text-decoration: underline;">不支援您的名字（缺字）</span>，強行製作會變亂碼，<strong>請務必更換字體！</strong>`;
+  }
+
   liabilityCheckbox.checked = false;
   copyAllBtn.disabled = true;
   copyAllBtn.textContent = "🔒 請先打勾確認字體正常，才能複製";
