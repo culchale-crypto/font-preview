@@ -20,7 +20,7 @@
 @font-face{font-family:"蘭亭集序書法字體";src:url("蘭亭集序書法字體.ttf");font-display:swap;}
 @font-face{font-family:"云起手寫細書體(繁)";src:url("云起手寫細書體.ttf");font-display:swap;}
 
-/* ===== 🆕 新增：精選印章適用字體 ===== */
+/* ===== 精選印章適用字體 ===== */
 @font-face{font-family:"JasonHandwriting1-Medium";src:url("JasonHandwriting1-Medium.ttf");font-display:swap;}
 @font-face{font-family:"JasonHandwriting6p";src:url("JasonHandwriting6p.ttf");font-display:swap;}
 @font-face{font-family:"JasonHandwriting8p";src:url("JasonHandwriting8p.ttf");font-display:swap;}
@@ -35,7 +35,6 @@
 @font-face{font-family:"Ole-Regular";src:url("Ole-Regular.ttf");font-display:swap;}
 
 :root {
-  /* 韓系奶油配色與原木質感 */
   --bg-color: #FDFBF7;    
   --card: #FFFFFF;        
   --primary: #C4A77D;     
@@ -45,7 +44,7 @@
   --text-light: #8C7E71;
   --warnBg: #F9F1E6;      
   --warnLine: #E8D3B9;
-  --brand-green: #8A9A86; /* 溫潤的鼠尾草綠點綴 */
+  --brand-green: #8A9A86; 
 }
 
 * { box-sizing: border-box; }
@@ -59,7 +58,6 @@ body {
 
 .wrap { max-width: 1100px; margin: 0 auto; padding: 28px 16px; flex: 1; width: 100%; }
 
-/* ===== 品牌感 Header ===== */
 .brand-header {
   text-align: center;
   margin-bottom: 24px;
@@ -168,10 +166,20 @@ button { border: 0; border-radius: 999px; padding: 12px 20px; cursor: pointer; f
   margin-top: 24px; background: #fff; border: 2px dashed var(--primary); border-radius: 16px; padding: 32px 24px; position: relative; overflow: hidden; user-select: none; 
 }
 .mainPreview::after {
-  content: "僅供預覽・請勿截圖"; position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex; align-items: center; justify-content: center; font-size: 40px; font-weight: 900; color: rgba(196, 167, 125, 0.08); transform: rotate(-10deg); pointer-events: none; z-index: 10; white-space: nowrap; letter-spacing: 4px;
+  content: "僅供預覽・請勿截圖"; position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex; align-items: center; justify-content: center; font-size: 40px; font-weight: 900; color: rgba(196, 167, 125, 0.05); transform: rotate(-10deg); pointer-events: none; z-index: 10; white-space: nowrap; letter-spacing: 4px;
 }
 .previewTitle { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; font-weight: 700; position: relative; z-index: 2; color: var(--primary); }
-.bigText { margin-top: 20px; min-height: 90px; font-size: 72px; line-height: 1.2; word-break: break-word; color: var(--text-main); text-align: center; position: relative; z-index: 2; }
+.bigText { margin-top: 20px; min-height: 90px; font-size: 64px; line-height: 1.2; word-break: break-word; color: var(--text-main); text-align: center; position: relative; z-index: 2; transition: all 0.2s; }
+
+/* 模擬實際刻印外框效果 */
+.bigText.has-frame {
+  border: 4px solid var(--text-main);
+  padding: 10px 20px;
+  display: inline-block;
+  margin: 20px auto 0 auto;
+  left: 50%;
+  transform: translateX(-50%);
+}
 
 .indelible-warning { margin-top: 10px; background: #FFF4D6; border: 2px solid #FFD36A; padding: 12px 16px; border-radius: 12px; font-size: 14px; color: #B27300; line-height: 1.5; display: none; }
 .indelible-warning b { color: #D63030; }
@@ -188,7 +196,6 @@ button { border: 0; border-radius: 999px; padding: 12px 20px; cursor: pointer; f
 .small { font-size: 13px; color: var(--text-light); font-weight: 500; }
 
 .grid { margin-top: 24px; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
-.grid { margin-top: 24px; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
 .card { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 18px; transition: 0.3s; }
 .card:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(90, 78, 67, 0.08); }
 .card.selected { border: 2px solid var(--primary); background: var(--bg-color); box-shadow: 0 8px 24px rgba(196, 167, 125, 0.15); }
@@ -204,7 +211,6 @@ button { border: 0; border-radius: 999px; padding: 12px 20px; cursor: pointer; f
 }
 .toast.show { opacity: 1; transform: translate(-50%, 0); }
 
-/* ===== 專業版 Footer ===== */
 .brand-footer {
   text-align: center;
   padding: 32px 16px;
@@ -280,10 +286,8 @@ button { border: 0; border-radius: 999px; padding: 12px 20px; cursor: pointer; f
           
           <div id="fontCheckWarning" class="font-check-box">
             <div class="icon">🚨</div>
-            <div class="content">
-              <strong>【重要確認】請檢查下方主預覽區！</strong><br>
-              您的名字是否有出現：<b>字體風格不一樣(混到一般粗黑體)</b>、<b>空白</b>、或 <b>方框□</b>？<br>
-              如果有的話，代表該字體<span style="text-decoration: underline;">不支援您的名字（缺字）</span>，強行製作會變亂碼，<strong>請務必更換字體！</strong>
+            <div class="content" id="warningContent">
+              <!-- JS 動態帶入真正的硬核警告 -->
             </div>
           </div>
           <div class="small" style="margin-top:4px;">提示：你在下方選字體後，這欄會自動填入；若需客製圖案請直接填寫「給圖片」。</div>
@@ -299,7 +303,7 @@ button { border: 0; border-radius: 999px; padding: 12px 20px; cursor: pointer; f
           <input type="checkbox" id="liabilityCheckbox">
           <div class="check-text">
             🙋‍♀️ 我已仔細檢查【主預覽區】的文字，確認字體顯示完全正常！
-            <span>（沒有缺字、沒有變方框、也沒有混入粗黑體等走鐘狀況。若因未檢查導致刻印亂碼，後果由買家承擔。）</span>
+            <span>（沒有缺字、沒有變方框、也沒有混入粗黑體或細明體。若因未檢查導致刻印亂碼或英文變成打字機體，後果由買家承擔。）</span>
           </div>
         </label>
 
@@ -311,7 +315,7 @@ button { border: 0; border-radius: 999px; padding: 12px 20px; cursor: pointer; f
       <div class="previewTitle">
         <div>主預覽（防截圖區）</div>
       </div>
-      <div id="bigText" class="bigText">王小明</div>
+      <div id="bigText" class="bigText has-frame">王小明</div>
     </div>
 
     <div class="grid" id="grid"></div>
@@ -338,10 +342,10 @@ const FONT_LIST = [
   { name:"小豆島黑體繁", tag:"黑體" },
   { name:"錢塘細筆字", tag:"細筆" },
   { name:"王漢宗中行書繁", tag:"行書" },
-  { name:"蘭亭集序書法字體", tag:"書法" },
+  { name:"蘭亭集序書法字體", tag:"書法（簡體編碼）" },
   { name:"云起手寫細書體(繁)", tag:"細書" },
   
-  // 🆕 新增精選中日文字體
+  // 精選中日文字體
   { name:"JasonHandwriting1-Medium", tag:"杰哥手寫" },
   { name:"JasonHandwriting6p", tag:"杰哥手寫6" },
   { name:"JasonHandwriting8p", tag:"杰哥手寫8" },
@@ -351,11 +355,11 @@ const FONT_LIST = [
   { name:"YuseiMagic-Regular", tag:"日系麥克筆" },
   { name:"HachiMaruPop-Regular", tag:"日系POP體" },
   
-  // 🆕 新增精選英文字體
-  { name:"IngridDarling-Regular", tag:"英式浪漫花體" },
-  { name:"Bonbon-Regular", tag:"英式軟糖體" },
-  { name:"EmilysCandy-Regular", tag:"英式糖果體" },
-  { name:"Ole-Regular", tag:"英式復古花體" }
+  // 精選英文字體
+  { name:"IngridDarling-Regular", tag:"純英文浪漫花體" },
+  { name:"Bonbon-Regular", tag:"純英文軟糖體" },
+  { name:"EmilysCandy-Regular", tag:"純英文糖體" },
+  { name:"Ole-Regular", tag:"純英文復古花體" }
 ];
 
 const generalColors = ["黑色", "紅色", "藍色", "紫色", "墨綠色", "微珠光金黃色(無螢光效果)"];
@@ -372,6 +376,7 @@ const toast = document.getElementById("toast");
 const copyAllBtn = document.getElementById("copyAllBtn");
 const indelibleWarning = document.getElementById("indelibleWarning");
 const fontCheckWarning = document.getElementById("fontCheckWarning");
+const warningContentEl = document.getElementById("warningContent");
 const liabilityCheckbox = document.getElementById("liabilityCheckbox");
 const liabilityWrapper = document.getElementById("liabilityWrapper");
 
@@ -416,9 +421,33 @@ document.querySelectorAll('input[name="inkType"]').forEach(radio => {
   });
 });
 
+// 新增外框收合與同步功能
+document.querySelectorAll('input[name="frame"]').forEach(radio => {
+  radio.addEventListener('change', (e) => {
+    if (e.target.value === "有外框") {
+      bigTextEl.classList.add("has-frame");
+    } else {
+      bigTextEl.classList.remove("has-frame");
+    }
+  });
+});
+
 function updatePreview(){
   const text = contentEl.value || "";
-  bigTextEl.textContent = text;
+  const hasChinese = /[\u4e00-\u9fa5]/.test(text);
+  const englishFonts = ["IngridDarling-Regular", "Bonbon-Regular", "EmilysCandy-Regular", "Ole-Regular"];
+
+  // 1. 強制檢查英文字體輸入中文的防呆
+  if (englishFonts.includes(selectedFont) && hasChinese) {
+    bigTextEl.textContent = "【此字體不支援中文】";
+    bigTextEl.style.color = "#d63030";
+    bigTextEl.style.fontSize = "32px";
+  } else {
+    bigTextEl.textContent = text;
+    bigTextEl.style.color = "var(--text-main)";
+    bigTextEl.style.fontSize = "64px";
+  }
+
   bigTextEl.style.fontFamily = selectedFont ? `'${selectedFont}'` : '';
   document.querySelectorAll(".sample").forEach(p=>{ p.textContent = text; });
 }
@@ -429,15 +458,18 @@ function setSelectedFont(fontName){
   statusEl.textContent = `✅ 已選擇字體：${fontName}`;
   fontCheckWarning.style.display = 'flex';
   
-  const contentWarningEl = fontCheckWarning.querySelector('.content');
+  // 硬核、不加美化的實話警示文字
   if(["Tanugo-TTF-Bold", "Tanugo-TTF-Round-Bold", "Yomogi-Regular", "YuseiMagic-Regular", "HachiMaruPop-Regular"].includes(fontName)){
-    contentWarningEl.innerHTML = `<strong>【日系字體特別注意】</strong><br>此字體為日型開源字，部分台灣繁體字（如：恆、裏、黃、綠）可能會<b>缺字變回新細明體</b>或<b>變方框</b>。請務必仔細看下方預覽，確認完全正常再打勾！`;
+    warningContentEl.innerHTML = `<strong>【日系字體致命缺字通知】</strong><br>此字體為日本開發，<b>高達 50% 的台灣繁體字、罕見字會直接破字</b>（變回新細明體或變成黑體）。請看下方主預覽區，只要發現有任何一個字的風格跟旁邊不同、或者變醜，就是缺字！`;
   } else if(["IngridDarling-Regular", "Bonbon-Regular", "EmilysCandy-Regular", "Ole-Regular"].includes(fontName)){
-    contentWarningEl.innerHTML = `<strong>【純英文字體注意】</strong><br>此字體<b>僅支援英文與數字</b>。如果您輸入中文，預覽區絕對會失真或無法顯示，請確認您的刻印內容為純英文！`;
+    warningContentEl.innerHTML = `<strong>【純英文字體警告】</strong><br>此字體<b>完全不包含任何中文字資料</b>。如果你在上面輸入了中文名字，預覽區會直接崩潰。請確保你刻印的內容是純英文！`;
+  } else if(fontName === "蘭亭集序書法字體"){
+    warningContentEl.innerHTML = `<strong>【簡體書法字體特別警告】</strong><br>這是一款簡體字型。當你輸入繁體字（如：葉、絜、萬）時，因為字體庫沒有資料，<b>電腦系統會自動抓最醜的粗黑體來硬塞補字</b>，導致做出來的名字筆劃完全走鐘。請極度仔細校對主預覽區！`;
   } else {
-    contentWarningEl.innerHTML = `<strong>【重要確認】請檢查下方主預覽區！</strong><br>您的名字是否有出現：<b>字體風格不一樣(混到一般粗黑體)</b>、<b>空白</b>、或 <b>方框□</b>？<br>如果有的話，代表該字體<span style="text-decoration: underline;">不支援您的名字（缺字）</span>，強行製作會變亂碼，<strong>請務必更換字體！</strong>`;
+    warningContentEl.innerHTML = `<strong>【重要校對】請檢查下方主預覽區！</strong><br>請確認您的文字有沒有：<b>字體風格不統一（有些字粗有些字細）</b>、<b>空白顯示不出來</b>、或 <b>變成方框□</b>？如果有，代表該字體不支援您的名字，硬做就是亂碼，請更換字體！`;
   }
 
+  // 重置打勾狀態，逼買家重新確認
   liabilityCheckbox.checked = false;
   copyAllBtn.disabled = true;
   copyAllBtn.textContent = "🔒 請先打勾確認字體正常，才能複製";
@@ -492,7 +524,6 @@ fontFieldEl.addEventListener("input", () => {
 
 updateInkColorOptions(getInkTypeValue());
 contentEl.addEventListener("input", updatePreview);
-document.querySelectorAll('input[name="frame"]').forEach(r=>r.addEventListener("change", ()=>{}));
 buildCards();
 updatePreview();
 </script>
