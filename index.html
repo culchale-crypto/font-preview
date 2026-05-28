@@ -169,7 +169,22 @@ button { border: 0; border-radius: 999px; padding: 12px 20px; cursor: pointer; f
   content: "僅供預覽・請勿截圖"; position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex; align-items: center; justify-content: center; font-size: 40px; font-weight: 900; color: rgba(196, 167, 125, 0.05); transform: rotate(-10deg); pointer-events: none; z-index: 10; white-space: nowrap; letter-spacing: 4px;
 }
 .previewTitle { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; font-weight: 700; position: relative; z-index: 2; color: var(--primary); }
-.bigText { margin-top: 20px; min-height: 90px; font-size: 64px; line-height: 1.2; word-break: break-word; color: var(--text-main); text-align: center; position: relative; z-index: 2; transition: all 0.2s; }
+
+/* 核心修正：取消瀏覽器可能帶入的粗體修飾，還原最真實的裸字長相 */
+.bigText { 
+  margin-top: 20px; 
+  min-height: 90px; 
+  font-size: 64px; 
+  line-height: 1.2; 
+  word-break: break-word; 
+  color: var(--text-main); 
+  text-align: center; 
+  position: relative; 
+  z-index: 2; 
+  transition: all 0.2s;
+  font-style: normal !important;
+  font-weight: normal !important; /* 防止瀏覽器強行加粗英文 */
+}
 
 /* 模擬實際刻印外框效果 */
 .bigText.has-frame {
@@ -196,13 +211,15 @@ button { border: 0; border-radius: 999px; padding: 12px 20px; cursor: pointer; f
 .small { font-size: 13px; color: var(--text-light); font-weight: 500; }
 
 .grid { margin-top: 24px; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+
+/* 核心修正：字體卡片預覽區也同步取消強行加粗 */
 .card { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 18px; transition: 0.3s; }
 .card:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(90, 78, 67, 0.08); }
 .card.selected { border: 2px solid var(--primary); background: var(--bg-color); box-shadow: 0 8px 24px rgba(196, 167, 125, 0.15); }
 .cardTop { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
 .fontName { font-weight: 700; color: var(--text-main); font-size: 16px; }
 .tag { font-size: 12px; font-weight: 600; color: var(--brand-green); background: rgba(138, 154, 134, 0.1); border: 1px solid rgba(138, 154, 134, 0.3); padding: 4px 10px; border-radius: 999px; white-space: nowrap; }
-.sample { margin-top: 16px; font-size: 46px; min-height: 60px; line-height: 1.2; word-break: break-word; text-align: center; color: var(--text-main); }
+.sample { margin-top: 16px; font-size: 46px; min-height: 60px; line-height: 1.2; word-break: break-word; text-align: center; color: var(--text-main); font-weight: normal !important; }
 .cardBtns { margin-top: 16px; display: flex; gap: 8px; flex-wrap: wrap; }
 .cardBtns button { padding: 10px 14px; font-size: 14px; flex: 1; }
 
@@ -287,7 +304,7 @@ button { border: 0; border-radius: 999px; padding: 12px 20px; cursor: pointer; f
           <div id="fontCheckWarning" class="font-check-box">
             <div class="icon">🚨</div>
             <div class="content" id="warningContent">
-              <!-- JS 動態帶入真正的硬核警告 -->
+              <!-- JS 動態帶入 -->
             </div>
           </div>
           <div class="small" style="margin-top:4px;">提示：你在下方選字體後，這欄會自動填入；若需客製圖案請直接填寫「給圖片」。</div>
@@ -303,7 +320,7 @@ button { border: 0; border-radius: 999px; padding: 12px 20px; cursor: pointer; f
           <input type="checkbox" id="liabilityCheckbox">
           <div class="check-text">
             🙋‍♀️ 我已仔細檢查【主預覽區】的文字，確認字體顯示完全正常！
-            <span>（沒有缺字、沒有變方框、也沒有混入粗黑體或細明體。若因未檢查導致刻印亂碼或英文變成打字機體，後果由買家承擔。）</span>
+            <span>（沒有缺字、沒有變方框、也沒有混入粗黑體或細明體。若因未檢查導致刻印亂碼或英文風格不符，後果由買家承擔。）</span>
           </div>
         </label>
 
@@ -421,7 +438,6 @@ document.querySelectorAll('input[name="inkType"]').forEach(radio => {
   });
 });
 
-// 新增外框收合與同步功能
 document.querySelectorAll('input[name="frame"]').forEach(radio => {
   radio.addEventListener('change', (e) => {
     if (e.target.value === "有外框") {
@@ -437,7 +453,6 @@ function updatePreview(){
   const hasChinese = /[\u4e00-\u9fa5]/.test(text);
   const englishFonts = ["IngridDarling-Regular", "Bonbon-Regular", "EmilysCandy-Regular", "Ole-Regular"];
 
-  // 1. 強制檢查英文字體輸入中文的防呆
   if (englishFonts.includes(selectedFont) && hasChinese) {
     bigTextEl.textContent = "【此字體不支援中文】";
     bigTextEl.style.color = "#d63030";
@@ -458,18 +473,16 @@ function setSelectedFont(fontName){
   statusEl.textContent = `✅ 已選擇字體：${fontName}`;
   fontCheckWarning.style.display = 'flex';
   
-  // 硬核、不加美化的實話警示文字
   if(["Tanugo-TTF-Bold", "Tanugo-TTF-Round-Bold", "Yomogi-Regular", "YuseiMagic-Regular", "HachiMaruPop-Regular"].includes(fontName)){
-    warningContentEl.innerHTML = `<strong>【日系字體致命缺字通知】</strong><br>此字體為日本開發，<b>高達 50% 的台灣繁體字、罕見字會直接破字</b>（變回新細明體或變成黑體）。請看下方主預覽區，只要發現有任何一個字的風格跟旁邊不同、或者變醜，就是缺字！`;
+    warningContentEl.innerHTML = `<strong>【日系字體致命缺字通知】</strong><br>此字體為日本開發，<b>高達 50% 的台灣繁體字、罕見字會直接破字</b>。請看下方主預覽區，確認字體風格完全一致再打勾！`;
   } else if(["IngridDarling-Regular", "Bonbon-Regular", "EmilysCandy-Regular", "Ole-Regular"].includes(fontName)){
-    warningContentEl.innerHTML = `<strong>【純英文字體警告】</strong><br>此字體<b>完全不包含任何中文字資料</b>。如果你在上面輸入了中文名字，預覽區會直接崩潰。請確保你刻印的內容是純英文！`;
+    warningContentEl.innerHTML = `<strong>【純英文字體警告】</strong><br>此字體<b>完全不包含任何中文字資料</b>。如果你輸入了中文名字，預覽區會直接失效。請確保刻印內容是純英文！`;
   } else if(fontName === "蘭亭集序書法字體"){
-    warningContentEl.innerHTML = `<strong>【簡體書法字體特別警告】</strong><br>這是一款簡體字型。當你輸入繁體字（如：葉、絜、萬）時，因為字體庫沒有資料，<b>電腦系統會自動抓最醜的粗黑體來硬塞補字</b>，導致做出來的名字筆劃完全走鐘。請極度仔細校對主預覽區！`;
+    warningContentEl.innerHTML = `<strong>【特殊字體通知】</strong><br>此款字體包含的英文具有獨特的楷隸頓筆線條，<b>並非流暢的草書體</b>。請仔細核對下方主預覽區的英文長相，這就是實際印章做出來的真實效果，確認接受再行複製。`;
   } else {
-    warningContentEl.innerHTML = `<strong>【重要校對】請檢查下方主預覽區！</strong><br>請確認您的文字有沒有：<b>字體風格不統一（有些字粗有些字細）</b>、<b>空白顯示不出來</b>、或 <b>變成方框□</b>？如果有，代表該字體不支援您的名字，硬做就是亂碼，請更換字體！`;
+    warningContentEl.innerHTML = `<strong>【重要校對】請檢查下方主預覽區！</strong><br>請確認您的文字有沒有：<b>字體風格不統一</b>、<b>空白顯示不出來</b>、或 <b>變成方框□</b>？如果有，代表該字體不支援您的名字，請更換字體！`;
   }
 
-  // 重置打勾狀態，逼買家重新確認
   liabilityCheckbox.checked = false;
   copyAllBtn.disabled = true;
   copyAllBtn.textContent = "🔒 請先打勾確認字體正常，才能複製";
