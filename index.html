@@ -170,7 +170,7 @@ button { border: 0; border-radius: 999px; padding: 12px 20px; cursor: pointer; f
 }
 .previewTitle { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; font-weight: 700; position: relative; z-index: 2; color: var(--primary); }
 
-/* 核心修正：取消瀏覽器可能帶入的粗體修飾，還原最真實的裸字長相 */
+/* 核心修正：主預覽區，強制取消所有網頁系統自帶的斜體與加粗，呈現「硬派裸字」 */
 .bigText { 
   margin-top: 20px; 
   min-height: 90px; 
@@ -183,7 +183,7 @@ button { border: 0; border-radius: 999px; padding: 12px 20px; cursor: pointer; f
   z-index: 2; 
   transition: all 0.2s;
   font-style: normal !important;
-  font-weight: normal !important; /* 防止瀏覽器強行加粗英文 */
+  font-weight: 400 !important; 
 }
 
 /* 模擬實際刻印外框效果 */
@@ -212,14 +212,25 @@ button { border: 0; border-radius: 999px; padding: 12px 20px; cursor: pointer; f
 
 .grid { margin-top: 24px; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
 
-/* 核心修正：字體卡片預覽區也同步取消強行加粗 */
 .card { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 18px; transition: 0.3s; }
 .card:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(90, 78, 67, 0.08); }
 .card.selected { border: 2px solid var(--primary); background: var(--bg-color); box-shadow: 0 8px 24px rgba(196, 167, 125, 0.15); }
 .cardTop { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
 .fontName { font-weight: 700; color: var(--text-main); font-size: 16px; }
 .tag { font-size: 12px; font-weight: 600; color: var(--brand-green); background: rgba(138, 154, 134, 0.1); border: 1px solid rgba(138, 154, 134, 0.3); padding: 4px 10px; border-radius: 999px; white-space: nowrap; }
-.sample { margin-top: 16px; font-size: 46px; min-height: 60px; line-height: 1.2; word-break: break-word; text-align: center; color: var(--text-main); font-weight: normal !important; }
+
+/* 核心修正：下方所有字體列表小卡片，全面強制「禁用系統斜體」與「禁用自動加粗」 */
+.sample { 
+  margin-top: 16px; 
+  font-size: 46px; 
+  min-height: 60px; 
+  line-height: 1.2; 
+  word-break: break-word; 
+  text-align: center; 
+  color: var(--text-main); 
+  font-weight: 400 !important; 
+  font-style: normal !important; 
+}
 .cardBtns { margin-top: 16px; display: flex; gap: 8px; flex-wrap: wrap; }
 .cardBtns button { padding: 10px 14px; font-size: 14px; flex: 1; }
 
@@ -474,11 +485,11 @@ function setSelectedFont(fontName){
   fontCheckWarning.style.display = 'flex';
   
   if(["Tanugo-TTF-Bold", "Tanugo-TTF-Round-Bold", "Yomogi-Regular", "YuseiMagic-Regular", "HachiMaruPop-Regular"].includes(fontName)){
-    warningContentEl.innerHTML = `<strong>【日系字體致命缺字通知】</strong><br>此字體為日本開發，<b>高達 50% 的台灣繁體字、罕見字會直接破字</b>。請看下方主預覽區，確認字體風格完全一致再打勾！`;
+    warningContentEl.innerHTML = `<strong>【日系字體裝飾通知】</strong><br>此字體部分台灣繁體字、罕見字會直接破字。請看下方主預覽區，確認字體風格完全一致再打勾！`;
   } else if(["IngridDarling-Regular", "Bonbon-Regular", "EmilysCandy-Regular", "Ole-Regular"].includes(fontName)){
-    warningContentEl.innerHTML = `<strong>【純英文字體警告】</strong><br>此字體<b>完全不包含任何中文字資料</b>。如果你輸入了中文名字，預覽區會直接失效。請確保刻印內容是純英文！`;
+    warningContentEl.innerHTML = `<strong>【純英文字體警告】</strong><br>此字體<b>完全不包含任何中文字資料</b>。請確保刻印內容是純英文！`;
   } else if(fontName === "蘭亭集序書法字體"){
-    warningContentEl.innerHTML = `<strong>【特殊字體通知】</strong><br>此款字體包含的英文具有獨特的楷隸頓筆線條，<b>並非流暢的草書體</b>。請仔細核對下方主預覽區的英文長相，這就是實際印章做出來的真實效果，確認接受再行複製。`;
+    warningContentEl.innerHTML = `<strong>【特殊字體通知】</strong><br>此字體所含英文具有獨特的楷隸頓筆硬線條，<b>絕非英式流暢草書</b>。請仔細核對預覽效果，確認接受再行複製。`;
   } else {
     warningContentEl.innerHTML = `<strong>【重要校對】請檢查下方主預覽區！</strong><br>請確認您的文字有沒有：<b>字體風格不統一</b>、<b>空白顯示不出來</b>、或 <b>變成方框□</b>？如果有，代表該字體不支援您的名字，請更換字體！`;
   }
