@@ -4,7 +4,6 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>初心畫具｜客製化印章字型預覽</title>
-
 <style>
 @font-face{font-family:"標楷體";src:url("標楷體.ttf");font-display:block;}
 @font-face{font-family:"落落補｜時光體";src:url("落落補-時光體.ttf");font-display:block;}
@@ -21,8 +20,6 @@
 @font-face{font-family:"JasonHandwriting1-Medium";src:url("JasonHandwriting1-Medium.ttf");font-display:block;}
 @font-face{font-family:"JasonHandwriting6p";src:url("JasonHandwriting6p.ttf");font-display:block;}
 @font-face{font-family:"JasonHandwriting8p";src:url("JasonHandwriting8p.ttf");font-display:block;}
-@font-face{font-family:"Tanugo-TTF-Bold";src:url("Tanugo-TTF-Bold.ttf");font-display:block;}
-@font-face{font-family:"Tanugo-TTF-Round-Bold";src:url("Tanugo-TTF-Round-Bold.ttf");font-display:block;}
 @font-face{font-family:"Yomogi-Regular";src:url("Yomogi-Regular.ttf");font-display:block;}
 @font-face{font-family:"YuseiMagic-Regular";src:url("YuseiMagic-Regular.ttf");font-display:block;}
 @font-face{font-family:"HachiMaruPop-Regular";src:url("HachiMaruPop-Regular.ttf");font-display:block;}
@@ -31,155 +28,189 @@
 @font-face{font-family:"EmilysCandy-Regular";src:url("EmilysCandy-Regular.ttf");font-display:block;}
 @font-face{font-family:"Ole-Regular";src:url("Ole-Regular.ttf");font-display:block;}
 
-:root {
-  --bg-color: #FDFBF7;
-  --card: #FFFFFF;
-  --primary: #C4A77D;
-  --primary-hover: #b09269;
-  --line: #E8E3DB;
-  --text-main: #5A4E43;
-  --text-light: #8C7E71;
-  --warnBg: #F9F1E6;
-  --warnLine: #E8D3B9;
-  --brand-green: #8A9A86;
+:root{
+  --bg:#0F0A1E;
+  --panel:#1A0F35;
+  --panel2:#200F40;
+  --border:#3D2B6A;
+  --border2:#5A3D9A;
+  --primary:#9B6FDD;
+  --primary-btn:#5B21B6;
+  --primary-btn2:#7C3AED;
+  --text:#E8D8FF;
+  --text2:#B090FF;
+  --text3:#8060CC;
+  --white:#ffffff;
+  --input-border:#5A3D9A;
+  --warn-bg:#2A0F1E;
+  --warn-border:#C060A0;
 }
 
-* { box-sizing: border-box; }
-body {
-  margin: 0; font-family: system-ui, -apple-system, "PingFang TC", "Microsoft JhengHei", sans-serif;
-  color: var(--text-main); background-color: var(--bg-color);
-  background-image: radial-gradient(circle at 50% 50%, #f4eee6 2px, transparent 2px);
-  background-size: 32px 32px; min-height: 100vh;
-  display: flex; flex-direction: column;
+*{box-sizing:border-box;}
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,"PingFang TC","Microsoft JhengHei",sans-serif;
+  background:var(--bg);
+  background-image:radial-gradient(circle at 30% 20%,rgba(91,33,182,.15) 0%,transparent 50%),
+                   radial-gradient(circle at 70% 80%,rgba(155,111,221,.1) 0%,transparent 50%);
+  color:var(--text);min-height:100vh;display:flex;flex-direction:column;
+}
+.wrap{max-width:1100px;margin:0 auto;padding:28px 16px;flex:1;width:100%;}
+
+.brand-header{text-align:center;margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid var(--border);}
+.brand-name{
+  font-size:32px;font-weight:900;color:var(--text);letter-spacing:6px;margin:0 0 8px 0;
+  display:inline-flex;align-items:center;gap:14px;
+  text-shadow:0 0 30px rgba(155,111,221,.6);
+}
+.brand-name::before,.brand-name::after{content:"";display:block;width:28px;height:1px;background:var(--primary);opacity:.7;}
+.brand-subtitle{font-size:12px;color:var(--text2);letter-spacing:3px;text-transform:uppercase;font-weight:700;margin-bottom:14px;}
+.brand-intro{font-size:15px;color:var(--text2);line-height:1.7;margin:0;}
+
+.panel{background:var(--panel);border-radius:20px;padding:32px;border:1px solid var(--border);}
+.form{background:var(--panel2);border:1px solid var(--border);border-radius:16px;padding:20px;}
+.formGrid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+@media(max-width:760px){.formGrid{grid-template-columns:1fr;}.panel{padding:20px;}}
+
+.field{display:flex;flex-direction:column;gap:8px;}
+label{font-weight:700;color:var(--text);font-size:15px;}
+
+/* 填寫格白底 */
+input[type="text"],textarea,select{
+  width:100%;border:1.5px solid var(--input-border);border-radius:12px;
+  padding:14px;font-size:16px;outline:none;
+  background:#ffffff;color:#1a0f35;
+  transition:.2s;
+}
+input[type="text"]:focus,textarea:focus,select:focus{
+  border-color:var(--primary);box-shadow:0 0 0 3px rgba(155,111,221,.25);
+}
+textarea{min-height:80px;resize:vertical;}
+
+.inline{
+  display:flex;gap:12px;align-items:center;flex-wrap:wrap;
+  padding:10px 14px;border:1px solid var(--border2);border-radius:12px;
+  background:#ffffff;
+}
+.inline label{font-weight:500;cursor:pointer;color:#1a0f35;}
+.inline input{transform:translateY(1px);accent-color:var(--primary-btn);}
+
+.ink-group{display:flex;gap:10px;flex-wrap:wrap;margin-top:4px;}
+.ink-card{flex:1;min-width:180px;position:relative;cursor:pointer;}
+.ink-card input{position:absolute;opacity:0;cursor:pointer;}
+.ink-body{
+  border:1.5px solid var(--border2);background:#ffffff;border-radius:12px;
+  padding:12px;text-align:center;transition:.2s;display:flex;flex-direction:column;gap:4px;
+}
+.ink-body strong{font-size:16px;color:#1a0f35;}
+.ink-body span{font-size:12px;color:#5a3d8a;}
+.ink-card input:checked+.ink-body{border-color:var(--primary);background:#f0e8ff;box-shadow:0 4px 14px rgba(155,111,221,.3);}
+.ink-card input:checked+.ink-body strong{color:#3D1A6B;}
+.ink-card.danger input:checked+.ink-body{border-color:#C060A0;background:#fff0f8;}
+.ink-card.danger input:checked+.ink-body strong{color:#9B2260;}
+
+.rowActions{margin-top:20px;display:flex;flex-direction:column;gap:14px;}
+.status{
+  font-weight:700;background:var(--panel);border:1px solid var(--border2);
+  padding:12px 16px;border-radius:12px;color:var(--primary);font-size:16px;
 }
 
-.wrap { max-width: 1100px; margin: 0 auto; padding: 28px 16px; flex: 1; width: 100%; }
+button{border:0;border-radius:999px;padding:12px 20px;cursor:pointer;font-weight:700;font-size:15px;transition:.2s;}
 
-.brand-header {
-  text-align: center; margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px solid var(--line);
+.liability-check{
+  background:var(--warn-bg);border:2px dashed var(--warn-border);
+  padding:16px;border-radius:12px;display:flex;align-items:flex-start;gap:12px;cursor:pointer;transition:.3s;
 }
-.brand-name {
-  font-size: 28px; font-weight: 900; color: var(--text-main); letter-spacing: 4px; margin: 0 0 8px 0;
-  display: inline-flex; align-items: center; gap: 12px;
+.liability-check:hover{background:#350f28;}
+.liability-check input[type="checkbox"]{width:24px;height:24px;margin-top:2px;cursor:pointer;accent-color:var(--warn-border);}
+.liability-check .check-text{font-size:16px;font-weight:700;color:#f0a0d0;line-height:1.5;}
+.liability-check .check-text span{font-size:13px;font-weight:500;color:var(--text2);display:block;margin-top:4px;}
+
+.layout-confirm-notice{
+  background:#1A0F35;border:1.5px solid #5A3D9A;border-radius:12px;
+  padding:14px 18px;display:flex;align-items:flex-start;gap:12px;
 }
-.brand-name::before, .brand-name::after {
-  content: ""; display: block; width: 24px; height: 2px; background-color: var(--brand-green); opacity: 0.6;
+.layout-confirm-notice .icon{font-size:20px;flex-shrink:0;margin-top:1px;}
+.layout-confirm-notice .content{font-size:14px;color:var(--text2);line-height:1.7;}
+.layout-confirm-notice .content strong{font-size:15px;color:var(--text);display:block;margin-bottom:4px;}
+.layout-confirm-notice .content ul{margin:6px 0 0 0;padding-left:18px;}
+.layout-confirm-notice .content ul li{margin-bottom:3px;}
+
+.btnGiant{
+  width:100%;background:var(--primary-btn);color:#fff;font-size:20px;padding:18px 20px;
+  border-radius:16px;font-weight:900;border:2px solid var(--primary-btn2);cursor:pointer;
+  box-shadow:0 8px 25px rgba(91,33,182,.5);
+  animation:copyPulse 1.8s infinite;letter-spacing:1px;
 }
-.brand-subtitle { font-size: 13px; color: var(--brand-green); letter-spacing: 2px; text-transform: uppercase; font-weight: 700; margin-bottom: 16px; }
-.brand-intro { font-size: 15px; color: var(--text-light); line-height: 1.6; margin: 0; font-weight: 500; }
+.btnGiant:hover:not(:disabled){background:var(--primary-btn2);transform:translateY(-2px);box-shadow:0 12px 30px rgba(124,58,237,.6);}
+.btnGiant:disabled{background:#2D1B55;border-color:#3D2B6A;color:#6040A0;cursor:not-allowed;box-shadow:none;animation:none;}
 
-.panel {
-  background: rgba(255, 255, 255, 0.95); border-radius: 20px;
-  padding: 32px; box-shadow: 0 12px 36px rgba(90, 78, 67, 0.05); border: 1px solid var(--line);
+.shake-animation{animation:shake .5s cubic-bezier(.36,.07,.19,.97) both;}
+@keyframes shake{10%,90%{transform:translate3d(-1px,0,0)}20%,80%{transform:translate3d(2px,0,0)}30%,50%,70%{transform:translate3d(-4px,0,0)}40%,60%{transform:translate3d(4px,0,0)}}
+@keyframes copyPulse{0%{box-shadow:0 0 0 0 rgba(124,58,237,.7)}70%{box-shadow:0 0 0 16px rgba(124,58,237,0)}100%{box-shadow:0 0 0 0 rgba(124,58,237,0)}}
+
+.mainPreview{
+  margin-top:24px;background:var(--panel);border:2px dashed var(--primary);
+  border-radius:16px;padding:32px 24px;position:relative;overflow:hidden;user-select:none;
 }
-
-.form { background: var(--bg-color); border: 1px solid var(--line); border-radius: 16px; padding: 20px; }
-.formGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-@media (max-width: 760px) { .formGrid { grid-template-columns: 1fr; } .panel { padding: 20px; } }
-.field { display: flex; flex-direction: column; gap: 8px; }
-label { font-weight: 700; color: var(--text-main); font-size: 15px; }
-input[type="text"], textarea, select {
-  width: 100%; border: 1px solid var(--line); border-radius: 12px;
-  padding: 14px; font-size: 16px; outline: none; background: #fff; color: var(--text-main); transition: 0.2s;
+.mainPreview::after{
+  content:"僅供預覽・請勿截圖";position:absolute;top:0;left:0;right:0;bottom:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:40px;font-weight:900;color:rgba(155,111,221,.07);
+  transform:rotate(-10deg);pointer-events:none;z-index:10;white-space:nowrap;letter-spacing:4px;
 }
-input[type="text"]:focus, textarea:focus, select:focus {
-  border-color: var(--primary); box-shadow: 0 0 0 3px rgba(196, 167, 125, 0.15);
+.previewTitle{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;font-weight:700;position:relative;z-index:2;color:var(--primary);}
+.bigText{margin-top:20px;min-height:90px;font-size:72px;line-height:1.2;word-break:break-word;color:var(--text);text-align:center;position:relative;z-index:2;}
+
+.indelible-warning{margin-top:10px;background:#2A1020;border:2px solid #C060A0;padding:12px 16px;border-radius:12px;font-size:14px;color:#f0a0d0;line-height:1.5;display:none;}
+.indelible-warning b{color:#ff7070;}
+
+.font-check-box{
+  margin-top:8px;background:#2A0F20;border:2px dashed #C060A0;padding:12px 16px;
+  border-radius:12px;display:none;gap:12px;align-items:flex-start;
+  animation:dropDown .3s cubic-bezier(.175,.885,.32,1.275);
 }
-textarea { min-height: 80px; resize: vertical; }
+@keyframes dropDown{0%{opacity:0;transform:translateY(-10px)}100%{opacity:1;transform:translateY(0)}}
+.font-check-box .icon{font-size:28px;animation:wobble 1s infinite;}
+@keyframes wobble{0%,100%{transform:rotate(-10deg) scale(1)}50%{transform:rotate(10deg) scale(1.1)}}
+.font-check-box .content{font-size:14px;color:#f0a0d0;line-height:1.5;}
+.font-check-box .content b{font-size:15px;color:#ffaaaa;background:#5A1030;padding:2px 4px;border-radius:4px;}
 
-.inline { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; padding: 10px 14px; border: 1px solid var(--line); border-radius: 12px; background: #fff; }
-.inline label { font-weight: 500; cursor: pointer; }
-.inline input { transform: translateY(1px); accent-color: var(--primary); }
+.small{font-size:13px;color:var(--text3);font-weight:500;}
 
-.ink-group { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 4px; }
-.ink-card { flex: 1; min-width: 180px; position: relative; cursor: pointer; }
-.ink-card input { position: absolute; opacity: 0; cursor: pointer; }
-.ink-body {
-  border: 2px solid var(--line); background: #fff; border-radius: 12px; padding: 12px; text-align: center; transition: 0.2s; display: flex; flex-direction: column; gap: 4px;
+.grid{margin-top:24px;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;}
+.card{
+  background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:18px;transition:.3s;
 }
-.ink-body strong { font-size: 16px; color: var(--text-main); }
-.ink-body span { font-size: 12px; color: var(--text-light); }
-.ink-card input:checked + .ink-body { border-color: var(--primary); background: #fbf7f2; box-shadow: 0 4px 12px rgba(196, 167, 125, 0.15); }
-.ink-card input:checked + .ink-body strong { color: #A67C43; }
-.ink-card.danger input:checked + .ink-body { border-color: #D63030; background: #FFF0F0; }
-.ink-card.danger input:checked + .ink-body strong { color: #D63030; }
-
-.rowActions { margin-top: 20px; display: flex; flex-direction: column; gap: 16px; }
-.status-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; justify-content: space-between; }
-.status { font-weight: 700; background: #fff; border: 1px solid var(--line); padding: 12px 16px; border-radius: 12px; flex: 1; color: var(--primary); font-size: 16px; }
-button { border: 0; border-radius: 999px; padding: 12px 20px; cursor: pointer; font-weight: 700; font-size: 15px; letter-spacing: 0.5px; transition: 0.2s; }
-.btnOutline { background: #fff; border: 1px solid var(--primary); color: var(--primary); }
-.btnOutline:hover { background: var(--bg-color); }
-
-.liability-check {
-  background: #FFF5F5; border: 2px dashed #E74C3C; padding: 16px; border-radius: 12px; display: flex; align-items: flex-start; gap: 12px; cursor: pointer; transition: 0.3s;
+.card:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(91,33,182,.2);border-color:var(--border2);}
+.card.selected{border:2px solid var(--primary);background:var(--panel2);box-shadow:0 8px 24px rgba(155,111,221,.25);}
+.cardTop{display:flex;justify-content:space-between;align-items:center;gap:10px;}
+.fontName{font-weight:700;color:var(--text);font-size:16px;}
+.sample{margin-top:16px;font-size:46px;min-height:60px;line-height:1.2;word-break:break-word;text-align:center;color:var(--text);}
+.cardBtns{margin-top:16px;}
+.cardBtns button{
+  width:100%;padding:10px 14px;font-size:14px;
+  background:var(--primary-btn);color:#fff;border-radius:10px;
 }
-.liability-check:hover { background: #ffebeb; }
-.liability-check input[type="checkbox"] { width: 24px; height: 24px; margin-top: 2px; cursor: pointer; accent-color: #E74C3C; }
-.liability-check .check-text { font-size: 16px; font-weight: 700; color: #C0392B; line-height: 1.5; }
-.liability-check .check-text span { font-size: 13px; font-weight: 500; color: #5A4E43; display: block; margin-top: 4px; }
+.cardBtns button:hover{background:var(--primary-btn2);}
+.card.selected .cardBtns button{background:#2D6A2D;color:#fff;}
 
-.btnGiant {
-  width: 100%; background: #E27B58; color: #fff; font-size: 20px; padding: 18px 20px; border-radius: 16px; font-weight: 900; border: 2px solid #C45F3D; cursor: pointer; box-shadow: 0 8px 20px rgba(226, 123, 88, 0.4); animation: copyPulse 1.5s infinite; letter-spacing: 1px;
+.toast{
+  position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);
+  background:rgba(26,15,53,.97);color:var(--text);padding:16px 28px;border-radius:999px;
+  font-weight:700;opacity:0;pointer-events:none;transition:all .3s cubic-bezier(.68,-.55,.265,1.55);
+  box-shadow:0 8px 24px rgba(0,0,0,.4);letter-spacing:1px;z-index:999;font-size:16px;
+  border:1px solid var(--border2);
 }
-.btnGiant:hover:not(:disabled) { background: #C45F3D; transform: translateY(-2px); box-shadow: 0 12px 25px rgba(226, 123, 88, 0.5); }
-.btnGiant:disabled { background: #D5D0C9; border-color: #C0BBB4; color: #9A948C; cursor: not-allowed; box-shadow: none; animation: none; }
+.toast.show{opacity:1;transform:translate(-50%,0);}
 
-.shake-animation { animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both; }
-@keyframes shake { 10%, 90% { transform: translate3d(-1px, 0, 0); } 20%, 80% { transform: translate3d(2px, 0, 0); } 30%, 50%, 70% { transform: translate3d(-4px, 0, 0); } 40%, 60% { transform: translate3d(4px, 0, 0); } }
-@keyframes copyPulse { 0% { box-shadow: 0 0 0 0 rgba(226, 123, 88, 0.6); } 70% { box-shadow: 0 0 0 15px rgba(226, 123, 88, 0); } 100% { box-shadow: 0 0 0 0 rgba(226, 123, 88, 0); } }
-
-.mainPreview {
-  margin-top: 24px; background: #fff; border: 2px dashed var(--primary); border-radius: 16px; padding: 32px 24px; position: relative; overflow: hidden; user-select: none;
-}
-.mainPreview::after {
-  content: "僅供預覽・請勿截圖"; position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex; align-items: center; justify-content: center; font-size: 40px; font-weight: 900; color: rgba(196, 167, 125, 0.08); transform: rotate(-10deg); pointer-events: none; z-index: 10; white-space: nowrap; letter-spacing: 4px;
-}
-.previewTitle { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; font-weight: 700; position: relative; z-index: 2; color: var(--primary); }
-.bigText { margin-top: 20px; min-height: 90px; font-size: 72px; line-height: 1.2; word-break: break-word; color: var(--text-main); text-align: center; position: relative; z-index: 2; }
-
-.indelible-warning { margin-top: 10px; background: #FFF4D6; border: 2px solid #FFD36A; padding: 12px 16px; border-radius: 12px; font-size: 14px; color: #B27300; line-height: 1.5; display: none; }
-.indelible-warning b { color: #D63030; }
-
-.font-check-box {
-  margin-top: 8px; background: #fff5f5; border: 2px dashed #e74c3c; padding: 12px 16px; border-radius: 12px; display: none; gap: 12px; align-items: flex-start; animation: dropDown 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-@keyframes dropDown { 0% { opacity: 0; transform: translateY(-10px); } 100% { opacity: 1; transform: translateY(0); } }
-.font-check-box .icon { font-size: 28px; animation: wobble 1s infinite; }
-@keyframes wobble { 0%, 100% { transform: rotate(-10deg) scale(1); } 50% { transform: rotate(10deg) scale(1.1); } }
-.font-check-box .content { font-size: 14px; color: #c0392b; line-height: 1.5; }
-.font-check-box .content b { font-size: 15px; color: #900; background: #ffcccc; padding: 2px 4px; border-radius: 4px;}
-
-.small { font-size: 13px; color: var(--text-light); font-weight: 500; }
-
-.grid { margin-top: 24px; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
-.card { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 18px; transition: 0.3s; }
-.card:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(90, 78, 67, 0.08); }
-.card.selected { border: 2px solid var(--primary); background: var(--bg-color); box-shadow: 0 8px 24px rgba(196, 167, 125, 0.15); }
-.cardTop { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
-.fontName { font-weight: 700; color: var(--text-main); font-size: 16px; }
-.tag { font-size: 12px; font-weight: 600; color: var(--brand-green); background: rgba(138, 154, 134, 0.1); border: 1px solid rgba(138, 154, 134, 0.3); padding: 4px 10px; border-radius: 999px; white-space: nowrap; }
-.sample { margin-top: 16px; font-size: 46px; min-height: 60px; line-height: 1.2; word-break: break-word; text-align: center; color: var(--text-main); }
-.cardBtns { margin-top: 16px; display: flex; gap: 8px; flex-wrap: wrap; }
-.cardBtns button { padding: 10px 14px; font-size: 14px; flex: 1; }
-
-.toast {
-  position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 20px); background: rgba(90, 78, 67, 0.95); color: #fff; padding: 16px 28px; border-radius: 999px; font-weight: 700; opacity: 0; pointer-events: none; transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55); box-shadow: 0 8px 24px rgba(0,0,0,0.2); letter-spacing: 1px; z-index: 999; font-size: 16px;
-}
-.toast.show { opacity: 1; transform: translate(-50%, 0); }
-
-.brand-footer {
-  text-align: center; padding: 32px 16px; margin-top: 20px; color: var(--text-light); font-size: 13px; line-height: 1.8;
-}
-.brand-footer p { margin: 0; }
-.brand-footer .copyright { margin-top: 8px; font-size: 12px; opacity: 0.8; }
+.brand-footer{text-align:center;padding:32px 16px;margin-top:20px;color:var(--text3);font-size:13px;line-height:1.8;}
+.brand-footer p{margin:0;}
 </style>
 </head>
-
 <body>
 <div class="wrap">
   <div class="panel">
-
     <div class="brand-header">
       <h1 class="brand-name">初心畫具</h1>
       <div class="brand-subtitle">Artisan Handmade Stamps</div>
@@ -207,11 +238,11 @@ button { border: 0; border-radius: 999px; padding: 12px 20px; cursor: pointer; f
               <input type="radio" name="inkType" value="特殊速乾不滅印油">
               <div class="ink-body">
                 <strong>速乾不滅印油</strong>
-                <span style="color:#c0392b; font-weight:bold;">限滑面材質</span>
+                <span style="color:#9B2260;font-weight:bold;">限滑面材質</span>
               </div>
             </label>
           </div>
-          <select id="ink" style="margin-top: 8px;"></select>
+          <select id="ink" style="margin-top:8px;"></select>
           <div id="indelibleWarning" class="indelible-warning">
             ⚠️ <b>注意！不滅印油操作難度較高：</b><br>
             因墨水具備極速乾燥特性，主要用於無法吸墨的滑面材質。若無頻繁使用或保養不當，<b>極易造成印章表面堵塞硬化報銷</b>。若您只是要蓋在一般紙張上，請務必改選「一般光敏印油」！
@@ -222,7 +253,7 @@ button { border: 0; border-radius: 999px; padding: 12px 20px; cursor: pointer; f
           <label for="content">2️⃣ 刻印內容（自填）</label>
           <textarea id="content" placeholder="請輸入要刻印的文字（可換行）">王小明</textarea>
           <div class="inline" style="margin-top:8px;">
-            <span style="font-weight:900;">是否需加外框：</span>
+            <span style="font-weight:900;color:#1a0f35;">是否需加外框：</span>
             <label><input type="radio" name="frame" value="有外框" checked> 有外框</label>
             <label><input type="radio" name="frame" value="無外框"> 無外框</label>
           </div>
@@ -236,7 +267,7 @@ button { border: 0; border-radius: 999px; padding: 12px 20px; cursor: pointer; f
             <div class="content">
               <strong>【重要確認】請檢查下方主預覽區！</strong><br>
               您的名字是否有出現：<b>字體風格不一樣(混到一般粗黑體)</b>、<b>空白</b>、或 <b>方框□</b>？<br>
-              如果有的話，代表該字體<span style="text-decoration: underline;">不支援您的名字（缺字）</span>，強行製作會變亂碼，<strong>請務必更換字體！</strong>
+              如果有的話，代表該字體<span style="text-decoration:underline;">不支援您的名字（缺字）</span>，強行製作會變亂碼，<strong>請務必更換字體！</strong>
             </div>
           </div>
           <div class="small" style="margin-top:4px;">提示：你在下方選字體後，這欄會自動填入；若需客製圖案請直接填寫「給圖片」。</div>
@@ -244,9 +275,7 @@ button { border: 0; border-radius: 999px; padding: 12px 20px; cursor: pointer; f
       </div>
 
       <div class="rowActions">
-        <div class="status-row">
-          <div class="status" id="status">目前尚未選擇字體</div>
-        </div>
+        <div class="status" id="status">目前尚未選擇字體</div>
 
         <label class="liability-check" id="liabilityWrapper">
           <input type="checkbox" id="liabilityCheckbox">
@@ -256,14 +285,24 @@ button { border: 0; border-radius: 999px; padding: 12px 20px; cursor: pointer; f
           </div>
         </label>
 
+        <div class="layout-confirm-notice">
+          <div class="icon">📐</div>
+          <div class="content">
+            <strong>【排版確認說明】若客服傳送排版確認圖，請以排版圖為最終準確依據</strong>
+            <ul>
+              <li>此預覽工具僅供字體風格參考，實際排版由客服製作後傳送確認圖。</li>
+              <li>收到排版確認圖後，若有任何問題（字體不符、內容錯誤等），請<b>務必在確認前提出</b>。</li>
+              <li><b>一旦回覆確認，即視為同意該排版，事後不得以「字體不對」為由要求重製。</b></li>
+            </ul>
+          </div>
+        </div>
+
         <button class="btnGiant" type="button" id="copyAllBtn" disabled>🔒 請先打勾確認字體正常，才能複製</button>
       </div>
     </div>
 
     <div class="mainPreview">
-      <div class="previewTitle">
-        <div>主預覽（防截圖區）</div>
-      </div>
+      <div class="previewTitle"><div>主預覽（防截圖區）</div></div>
       <div id="bigText" class="bigText">王小明</div>
     </div>
 
@@ -273,169 +312,141 @@ button { border: 0; border-radius: 999px; padding: 12px 20px; cursor: pointer; f
   <div class="brand-footer">
     <p>初心畫具手作印章・專屬客製化服務</p>
     <p>如有任何排版或字體問題，歡迎透過賣場聊聊聯繫客服為您處理。</p>
-    <p class="copyright">© 初心畫具 All Rights Reserved.</p>
+    <p style="margin-top:6px;font-size:12px;opacity:.6;">© 初心畫具 All Rights Reserved.</p>
   </div>
 </div>
 
 <div class="toast" id="toast">已複製</div>
 
 <script>
-const FONT_LIST = [
-  { name:"標楷體", tag:"楷書" },
-  { name:"落落補｜時光體", tag:"手寫" },
-  { name:"靈動指書手札字體", tag:"手札" },
-  { name:"華康布丁體W7(P)", tag:"可愛" },
-  { name:"華康古印體(P)", tag:"古印" },
-  { name:"華康皮皮體W5", tag:"俏皮" },
-  { name:"華康娃娃體(P)", tag:"童趣" },
-  { name:"小豆島黑體繁", tag:"黑體" },
-  { name:"錢塘細筆字", tag:"細筆" },
-  { name:"王漢宗中行書繁", tag:"行書" },
-  { name:"蘭亭集序書法字體", tag:"書法" },
-  { name:"云起手寫細書體(繁)", tag:"細書" },
-  { name:"JasonHandwriting1-Medium", tag:"杰哥手寫" },
-  { name:"JasonHandwriting6p", tag:"杰哥手寫6" },
-  { name:"JasonHandwriting8p", tag:"杰哥手寫8" },
-  { name:"Tanugo-TTF-Bold", tag:"日系角圓體" },
-  { name:"Tanugo-TTF-Round-Bold", tag:"日系圓體" },
-  { name:"Yomogi-Regular", tag:"日系蓬蓬體" },
-  { name:"YuseiMagic-Regular", tag:"日系麥克筆" },
-  { name:"HachiMaruPop-Regular", tag:"日系POP體" },
-  { name:"IngridDarling-Regular", tag:"英式浪漫花體" },
-  { name:"Bonbon-Regular", tag:"英式軟糖體" },
-  { name:"EmilysCandy-Regular", tag:"英式糖果體" },
-  { name:"Ole-Regular", tag:"英式復古花體" }
+const FONT_LIST=[
+  {name:"標楷體"},{name:"落落補｜時光體"},{name:"靈動指書手札字體"},
+  {name:"華康布丁體W7(P)"},{name:"華康古印體(P)"},{name:"華康皮皮體W5"},
+  {name:"華康娃娃體(P)"},{name:"小豆島黑體繁"},{name:"錢塘細筆字"},
+  {name:"王漢宗中行書繁"},{name:"蘭亭集序書法字體"},{name:"云起手寫細書體(繁)"},
+  {name:"JasonHandwriting1-Medium"},{name:"JasonHandwriting6p"},{name:"JasonHandwriting8p"},
+  {name:"Yomogi-Regular"},{name:"YuseiMagic-Regular"},{name:"HachiMaruPop-Regular"},
+  {name:"IngridDarling-Regular"},{name:"Bonbon-Regular"},{name:"EmilysCandy-Regular"},{name:"Ole-Regular"}
 ];
 
-const generalColors = ["黑色", "紅色", "藍色", "紫色", "墨綠色", "微珠光金黃色(無螢光效果)"];
-const indelibleColors = ["黑色", "深紅色", "藍色", "紫色"];
+const generalColors=["黑色","紅色","藍色","紫色","墨綠色","微珠光金黃色(無螢光效果)"];
+const indelibleColors=["黑色","深紅色","藍色","紫色"];
 
-const shellEl = document.getElementById("shell");
-const inkEl = document.getElementById("ink");
-const contentEl = document.getElementById("content");
-const fontFieldEl = document.getElementById("fontField");
-const statusEl = document.getElementById("status");
-const bigTextEl = document.getElementById("bigText");
-const grid = document.getElementById("grid");
-const toast = document.getElementById("toast");
-const copyAllBtn = document.getElementById("copyAllBtn");
-const indelibleWarning = document.getElementById("indelibleWarning");
-const fontCheckWarning = document.getElementById("fontCheckWarning");
-const liabilityCheckbox = document.getElementById("liabilityCheckbox");
-const liabilityWrapper = document.getElementById("liabilityWrapper");
+const shellEl=document.getElementById("shell");
+const inkEl=document.getElementById("ink");
+const contentEl=document.getElementById("content");
+const fontFieldEl=document.getElementById("fontField");
+const statusEl=document.getElementById("status");
+const bigTextEl=document.getElementById("bigText");
+const grid=document.getElementById("grid");
+const toast=document.getElementById("toast");
+const copyAllBtn=document.getElementById("copyAllBtn");
+const indelibleWarning=document.getElementById("indelibleWarning");
+const fontCheckWarning=document.getElementById("fontCheckWarning");
+const liabilityCheckbox=document.getElementById("liabilityCheckbox");
+const liabilityWrapper=document.getElementById("liabilityWrapper");
 
-let selectedFont = "";
+let selectedFont="";
 
-function showToast(msg){
-  toast.textContent = msg;
-  toast.classList.add("show");
-  setTimeout(()=>toast.classList.remove("show"), 2500);
-}
+function showToast(msg){toast.textContent=msg;toast.classList.add("show");setTimeout(()=>toast.classList.remove("show"),2500);}
 
 async function copyToClipboard(text){
-  try{ await navigator.clipboard.writeText(text); return true; }
-  catch(e){
-    try{ const ta = document.createElement("textarea"); ta.value = text; document.body.appendChild(ta); ta.select(); document.execCommand("copy"); document.body.removeChild(ta); return true; }
-    catch{ return false; }
-  }
+  try{await navigator.clipboard.writeText(text);return true;}
+  catch(e){try{const ta=document.createElement("textarea");ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand("copy");document.body.removeChild(ta);return true;}catch{return false;}}
 }
 
-function getFrameValue(){ const r = document.querySelector('input[name="frame"]:checked'); return r ? r.value : "（未選）"; }
-function getInkTypeValue(){ const r = document.querySelector('input[name="inkType"]:checked'); return r ? r.value : "一般光敏印油"; }
+function getFrameValue(){const r=document.querySelector('input[name="frame"]:checked');return r?r.value:"（未選）";}
+function getInkTypeValue(){const r=document.querySelector('input[name="inkType"]:checked');return r?r.value:"一般光敏印油";}
 
-function updateInkColorOptions(type) {
-  const currentSelected = inkEl.value;
-  inkEl.innerHTML = "";
-  const options = type === "特殊速乾不滅印油" ? indelibleColors : generalColors;
-  options.forEach(color => {
-    const opt = document.createElement("option"); opt.value = color; opt.textContent = color; inkEl.appendChild(opt);
-  });
-  if (options.includes(currentSelected)) { inkEl.value = currentSelected; } else { inkEl.value = "黑色"; }
+function updateInkColorOptions(type){
+  const cur=inkEl.value;inkEl.innerHTML="";
+  const opts=type==="特殊速乾不滅印油"?indelibleColors:generalColors;
+  opts.forEach(c=>{const o=document.createElement("option");o.value=c;o.textContent=c;inkEl.appendChild(o);});
+  if(opts.includes(cur))inkEl.value=cur;else inkEl.value="黑色";
 }
 
-document.querySelectorAll('input[name="inkType"]').forEach(radio => {
-  radio.addEventListener('change', (e) => {
-    indelibleWarning.style.display = e.target.value === "特殊速乾不滅印油" ? "block" : "none";
+document.querySelectorAll('input[name="inkType"]').forEach(r=>{
+  r.addEventListener('change',(e)=>{
+    indelibleWarning.style.display=e.target.value==="特殊速乾不滅印油"?"block":"none";
     updateInkColorOptions(e.target.value);
   });
 });
 
 function updatePreview(){
-  const text = contentEl.value || "";
-  bigTextEl.textContent = text;
-  bigTextEl.style.fontFamily = selectedFont ? `'${selectedFont}'` : '';
-  document.querySelectorAll(".sample").forEach(p=>{ p.textContent = text; });
+  const text=contentEl.value||"";
+  bigTextEl.textContent=text;
+  bigTextEl.style.fontFamily=selectedFont?`'${selectedFont}'`:'';
+  document.querySelectorAll(".sample").forEach(p=>{p.textContent=text;});
 }
 
 function setSelectedFont(fontName){
-  selectedFont = fontName;
-  fontFieldEl.value = fontName;
-  statusEl.textContent = `✅ 已選擇字體：${fontName}`;
-  fontCheckWarning.style.display = 'flex';
+  selectedFont=fontName;
+  fontFieldEl.value=fontName;
+  statusEl.textContent=`✅ 已選擇字體：${fontName}`;
+  fontCheckWarning.style.display='flex';
 
-  const contentWarningEl = fontCheckWarning.querySelector('.content');
-  if(["Tanugo-TTF-Bold", "Tanugo-TTF-Round-Bold", "Yomogi-Regular", "YuseiMagic-Regular", "HachiMaruPop-Regular"].includes(fontName)){
-    contentWarningEl.innerHTML = `<strong>【日系字體特別注意】</strong><br>此字體為日型開源字，部分台灣繁體字（如：恆、裏、黃、綠）可能會<b>缺字變回新細明體</b>或<b>變方框</b>。請務必仔細看下方預覽，確認完全正常再打勾！`;
-  } else if(["IngridDarling-Regular", "Bonbon-Regular", "EmilysCandy-Regular", "Ole-Regular"].includes(fontName)){
-    contentWarningEl.innerHTML = `<strong>【純英文字體注意】</strong><br>此字體<b>僅支援英文與數字</b>。如果您輸入中文，預覽區絕對會失真或無法顯示，請確認您的刻印內容為純英文！`;
-  } else {
-    contentWarningEl.innerHTML = `<strong>【重要確認】請檢查下方主預覽區！</strong><br>您的名字是否有出現：<b>字體風格不一樣(混到一般粗黑體)</b>、<b>空白</b>、或 <b>方框□</b>？<br>如果有的話，代表該字體<span style="text-decoration: underline;">不支援您的名字（缺字）</span>，強行製作會變亂碼，<strong>請務必更換字體！</strong>`;
+  const cw=fontCheckWarning.querySelector('.content');
+  if(["Yomogi-Regular","YuseiMagic-Regular","HachiMaruPop-Regular"].includes(fontName)){
+    cw.innerHTML=`<strong>【日系字體特別注意】</strong><br>此字體為日型開源字，部分台灣繁體字可能會<b>缺字變回新細明體</b>或<b>變方框</b>。請務必仔細看下方預覽，確認完全正常再打勾！`;
+  }else if(["IngridDarling-Regular","Bonbon-Regular","EmilysCandy-Regular","Ole-Regular"].includes(fontName)){
+    cw.innerHTML=`<strong>【純英文字體注意】</strong><br>此字體<b>僅支援英文與數字</b>。如果您輸入中文，預覽區絕對會失真或無法顯示，請確認您的刻印內容為純英文！`;
+  }else{
+    cw.innerHTML=`<strong>【重要確認】請檢查下方主預覽區！</strong><br>您的名字是否有出現：<b>字體風格不一樣(混到一般粗黑體)</b>、<b>空白</b>、或 <b>方框□</b>？<br>如果有的話，代表該字體<span style="text-decoration:underline;">不支援您的名字（缺字）</span>，強行製作會變亂碼，<strong>請務必更換字體！</strong>`;
   }
 
-  liabilityCheckbox.checked = false;
-  copyAllBtn.disabled = true;
-  copyAllBtn.textContent = "🔒 請先打勾確認字體正常，才能複製";
-
+  liabilityCheckbox.checked=false;
+  copyAllBtn.disabled=true;
+  copyAllBtn.textContent="🔒 請先打勾確認字體正常，才能複製";
   updatePreview();
 
-  document.querySelectorAll(".card").forEach(c => c.classList.remove("selected"));
-  const card = document.querySelector(`.card[data-font="${CSS.escape(fontName)}"]`);
-  if(card) card.classList.add("selected");
+  document.querySelectorAll(".card").forEach(c=>c.classList.remove("selected"));
+  const card=document.querySelector(`.card[data-font="${CSS.escape(fontName)}"]`);
+  if(card)card.classList.add("selected");
 }
 
 function buildCards(){
-  grid.innerHTML = "";
+  grid.innerHTML="";
   FONT_LIST.forEach(f=>{
-    const card = document.createElement("div"); card.className = "card"; card.setAttribute("data-font", f.name);
-    card.innerHTML = `<div class="cardTop"><div class="fontName">${f.name}</div><div class="tag">${f.tag}</div></div><div class="sample" style="font-family:'${f.name}'"></div><div class="cardBtns"><button class="btnPrimary" type="button" style="width:100%;">選用此字體預覽</button></div>`;
-    const btnPick = card.querySelector("button");
-    btnPick.addEventListener("click", ()=> { setSelectedFont(f.name); });
+    const card=document.createElement("div");
+    card.className="card";card.setAttribute("data-font",f.name);
+    card.innerHTML=`<div class="cardTop"><div class="fontName">${f.name}</div></div><div class="sample" style="font-family:'${f.name}'"></div><div class="cardBtns"><button type="button">選用此字體預覽</button></div>`;
+    card.querySelector("button").addEventListener("click",()=>setSelectedFont(f.name));
     grid.appendChild(card);
   });
 }
 
-liabilityCheckbox.addEventListener("change", (e) => {
-  if (e.target.checked) {
-    copyAllBtn.disabled = false;
-    copyAllBtn.textContent = "📋 點我一鍵複製【整段填寫內容】";
-  } else {
-    copyAllBtn.disabled = true;
-    copyAllBtn.textContent = "🔒 請先打勾確認字體正常，才能複製";
+liabilityCheckbox.addEventListener("change",(e)=>{
+  if(e.target.checked){
+    copyAllBtn.disabled=false;
+    copyAllBtn.textContent="📋 點我一鍵複製【整段填寫內容】";
+  }else{
+    copyAllBtn.disabled=true;
+    copyAllBtn.textContent="🔒 請先打勾確認字體正常，才能複製";
   }
 });
 
-copyAllBtn.addEventListener("click", async (e)=>{
-  if(copyAllBtn.disabled) return;
-  const payload = `印章外殼款式／顏色：${shellEl.value || "（未填）"}\n刻印內容：${contentEl.value || "（未填）"}\n外框：${getFrameValue()}\n字體：${(fontFieldEl.value || selectedFont || "（未填）")}\n印油種類：${getInkTypeValue()}\n印油顏色：${inkEl.value || "（未選）"}`;
-  const ok = await copyToClipboard(payload);
-  showToast(ok ? "✅ 複製成功！請直接貼上回覆我們～" : "複製失敗");
+copyAllBtn.addEventListener("click",async()=>{
+  if(copyAllBtn.disabled)return;
+  const payload=`印章外殼款式／顏色：${shellEl.value||"（未填）"}\n刻印內容：${contentEl.value||"（未填）"}\n外框：${getFrameValue()}\n字體：${fontFieldEl.value||selectedFont||"（未填）"}\n印油種類：${getInkTypeValue()}\n印油顏色：${inkEl.value||"（未選）"}`;
+  const ok=await copyToClipboard(payload);
+  showToast(ok?"✅ 複製成功！請直接貼上回覆我們～":"複製失敗");
 });
 
-copyAllBtn.parentElement.addEventListener("click", (e) => {
-  if(copyAllBtn.disabled && e.target === copyAllBtn) {
+copyAllBtn.parentElement.addEventListener("click",(e)=>{
+  if(copyAllBtn.disabled&&e.target===copyAllBtn){
     liabilityWrapper.classList.remove("shake-animation");
     void liabilityWrapper.offsetWidth;
     liabilityWrapper.classList.add("shake-animation");
   }
 });
 
-fontFieldEl.addEventListener("input", () => {
-  fontCheckWarning.style.display = fontFieldEl.value.trim() !== "" ? 'flex' : 'none';
+fontFieldEl.addEventListener("input",()=>{
+  fontCheckWarning.style.display=fontFieldEl.value.trim()!=""?'flex':'none';
 });
 
 updateInkColorOptions(getInkTypeValue());
-contentEl.addEventListener("input", updatePreview);
-document.querySelectorAll('input[name="frame"]').forEach(r=>r.addEventListener("change", ()=>{}));
+contentEl.addEventListener("input",updatePreview);
+document.querySelectorAll('input[name="frame"]').forEach(r=>r.addEventListener("change",()=>{}));
 buildCards();
 updatePreview();
 </script>
