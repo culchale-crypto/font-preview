@@ -136,6 +136,26 @@ button{border:0;border-radius:999px;padding:12px 20px;cursor:pointer;font-weight
 .layout-confirm-notice .content ul{margin:6px 0 0 0;padding-left:18px;}
 .layout-confirm-notice .content ul li{margin-bottom:3px;}
 
+.stamp-guide{
+  background:#1A0F35;border:1.5px solid #5A3D9A;border-radius:12px;
+  padding:14px 18px;display:flex;align-items:flex-start;gap:12px;
+}
+.stamp-guide .icon{font-size:20px;flex-shrink:0;margin-top:1px;}
+.stamp-guide .content{font-size:13px;color:var(--text2);line-height:1.7;}
+.stamp-guide .content strong{font-size:14px;color:var(--text);display:block;margin-bottom:6px;}
+.stamp-guide .content .row{display:flex;gap:8px;margin-bottom:4px;}
+.stamp-guide .content .row b{color:#C9A8FF;min-width:48px;flex-shrink:0;}
+
+.warranty-notice{
+  background:#2A0F20;border:1.5px solid #C060A0;border-radius:12px;
+  padding:14px 18px;display:flex;align-items:flex-start;gap:12px;
+}
+.warranty-notice .icon{font-size:20px;flex-shrink:0;margin-top:1px;}
+.warranty-notice .content{font-size:13px;color:#f0c0e0;line-height:1.7;}
+.warranty-notice .content strong{font-size:14px;color:#ffaaaa;display:block;margin-bottom:6px;}
+.warranty-notice .content ul{margin:6px 0 0 0;padding-left:18px;}
+.warranty-notice .content ul li{margin-bottom:3px;}
+
 .btnGiant{
   width:100%;background:var(--primary-btn);color:#fff;font-size:20px;padding:18px 20px;
   border-radius:16px;font-weight:900;border:2px solid var(--primary-btn2);cursor:pointer;
@@ -293,6 +313,32 @@ button{border:0;border-radius:999px;padding:12px 20px;cursor:pointer;font-weight
               <li>此預覽工具僅供字體風格參考，實際排版由客服製作後傳送確認圖。</li>
               <li>收到排版確認圖後，若有任何問題（字體不符、內容錯誤等），請<b>務必在確認前提出</b>。</li>
               <li><b>一旦回覆確認，即視為同意該排版，事後不得以「字體不對」為由要求重製。</b></li>
+              <li><b>若有傳送排版圖供您確認，則以排版圖為最終依據；若未另傳排版圖，則以本系統預覽畫面為最終依據。</b></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="stamp-guide">
+          <div class="icon">🖋️</div>
+          <div class="content">
+            <strong>【正確蓋印方式】成品清晰與否，蓋印手法影響很大</strong>
+            <div class="row"><b>力道：</b>垂直下壓、力道均勻，避免單邊施力或搖晃，否則邊框易模糊變形。</div>
+            <div class="row"><b>墨量：</b>沾墨（在有字或圖的印面上滴一點點即可），墨水過多會導致框線糊開、線條變粗甚至「無框變有框」的視覺誤差。</div>
+            <div class="row"><b>角度：</b>印面需完全水平貼合紙面，傾斜蓋印會造成局部缺墨或重疊。</div>
+            <div class="row"><b>測試：</b>正式蓋印前，建議先在廢紙上多次試蓋，抓取適合的力道與墨量手感，再蓋於正式文件上。</div>
+            因蓋印操作方式造成的成品落差（非印章本身刻製問題），不屬於商品瑕疵範圍。
+          </div>
+        </div>
+
+        <div class="warranty-notice">
+          <div class="icon">⏳</div>
+          <div class="content">
+            <strong>【保固說明】商品保固僅於到貨 7 天鑑賞期內提供</strong>
+            <ul>
+              <li>到貨 7 天內如有刻製錯誤或品質瑕疵（<b>不含因墨水溢出造成線條變粗、甚至「無框變有框」之操作性落差，以及印章殼脫落但可正常卡回、未損壞之情形</b>），請盡速與客服聯繫處理。</li>
+              <li><b>超過 7 天鑑賞期，恕不提供保固或免費更換服務。</b></li>
+              <li>日常保養建議：定期蓋印讓印面保持彈性、避免長時間日曬高溫、收納於乾燥陰涼處，可有效延長印章使用壽命。</li>
+              <li><b>具彈簧結構之連續印章（自動回彈式）：</b>長期或高頻次使用、印油殘留累積，容易導致邊框卡住、彈簧無法順利回彈，此為機構消耗品自然現象，非商品瑕疵。建議每次使用後輕拭印面殘墨，避免墨水堆積卡住滑軌。</li>
             </ul>
           </div>
         </div>
@@ -427,7 +473,8 @@ liabilityCheckbox.addEventListener("change",(e)=>{
 
 copyAllBtn.addEventListener("click",async()=>{
   if(copyAllBtn.disabled)return;
-  const payload=`印章外殼款式／顏色：${shellEl.value||"（未填）"}\n刻印內容：${contentEl.value||"（未填）"}\n外框：${getFrameValue()}\n字體：${fontFieldEl.value||selectedFont||"（未填）"}\n印油種類：${getInkTypeValue()}\n印油顏色：${inkEl.value||"（未選）"}`;
+  const noticeText="✅已確認字體顯示正常，沒有缺字、方框或混字情況。若客服有傳排版圖，將以排版圖為主；若沒有另傳，則以此預覽畫面為製作依據～蓋印時的力道、墨量、角度都會影響成品呈現，建議蓋印前可先在廢紙試蓋抓手感。彈簧式連續印章長期使用後，邊框較緊、回彈變慢是正常的機構耗損現象。商品保固提供至到貨7天鑑賞期內，超過此期間若有保養需求歡迎隨時詢問客服～";
+  const payload=`印章外殼款式／顏色：${shellEl.value||"（未填）"}\n刻印內容：${contentEl.value||"（未填）"}\n外框：${getFrameValue()}\n字體：${fontFieldEl.value||selectedFont||"（未填）"}\n印油種類：${getInkTypeValue()}\n印油顏色：${inkEl.value||"（未選）"}\n\n${noticeText}`;
   const ok=await copyToClipboard(payload);
   showToast(ok?"✅ 複製成功！請直接貼上回覆我們～":"複製失敗");
 });
