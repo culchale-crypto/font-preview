@@ -11,8 +11,7 @@
 @font-face{font-family:"華康布丁體W7(P)";src:url("華康布丁體W7P.ttf");font-display:block;}
 @font-face{
   font-family:"華康古印體(P)";
-  src:url("華康古印體P.woff?v=2") format("woff"),
-      url("華康古印體P.TTF?v=2") format("truetype");
+  src:url("guyin-fixed.woff?v=4") format("woff");
   font-weight:normal;
   font-style:normal;
   font-display:swap;
@@ -213,7 +212,9 @@ button{border:0;border-radius:999px;padding:12px 20px;cursor:pointer;font-weight
 .card.selected{border:2px solid var(--primary);background:var(--panel2);box-shadow:0 8px 24px rgba(155,111,221,.25);}
 .cardTop{display:flex;justify-content:space-between;align-items:center;gap:10px;}
 .fontName{font-weight:700;color:var(--text);font-size:16px;}
+.fontBadge{display:inline-flex;align-items:center;margin-left:7px;padding:3px 7px;border-radius:999px;background:#6D28D9;color:#fff;font-size:11px;font-weight:800;vertical-align:middle;}
 .sample{margin-top:16px;font-size:46px;min-height:60px;line-height:1.2;word-break:break-word;text-align:center;color:var(--text);}
+.sample.unsupported{display:flex;align-items:center;justify-content:center;font-family:system-ui,-apple-system,"PingFang TC","Microsoft JhengHei",sans-serif!important;font-size:16px;font-weight:700;color:#F6C453;}
 .cardBtns{margin-top:16px;}
 .cardBtns button{
   width:100%;padding:10px 14px;font-size:14px;
@@ -379,7 +380,8 @@ const FONT_LIST=[
   {name:"王漢宗中行書繁"},{name:"蘭亭集序書法字體"},{name:"云起手寫細書體(繁)"},
   {name:"JasonHandwriting1-Medium"},{name:"JasonHandwriting6p"},{name:"JasonHandwriting8p"},
   {name:"Yomogi-Regular"},{name:"YuseiMagic-Regular"},{name:"HachiMaruPop-Regular"},
-  {name:"IngridDarling-Regular"},{name:"Bonbon-Regular"},{name:"EmilysCandy-Regular"},{name:"Ole-Regular"}
+  {name:"IngridDarling-Regular",englishOnly:true},{name:"Bonbon-Regular",englishOnly:true},
+  {name:"EmilysCandy-Regular",englishOnly:true},{name:"Ole-Regular",englishOnly:true}
 ];
 
 const generalColors=["黑色","紅色","藍色","紫色","墨綠色","微珠光金黃色(無螢光效果)"];
@@ -400,6 +402,9 @@ const liabilityCheckbox=document.getElementById("liabilityCheckbox");
 const liabilityWrapper=document.getElementById("liabilityWrapper");
 
 let selectedFont="";
+
+const ENGLISH_ONLY_FONTS=new Set(FONT_LIST.filter(f=>f.englishOnly).map(f=>f.name));
+const containsChinese=text=>/[\u3400-\u4DBF\u4E00-\u9FFF\uF900-\uFAFF]/.test(text);
 
 function showToast(msg){toast.textContent=msg;toast.classList.add("show");setTimeout(()=>toast.classList.remove("show"),2500);}
 
@@ -427,9 +432,15 @@ document.querySelectorAll('input[name="inkType"]').forEach(r=>{
 
 function updatePreview(){
   const text=contentEl.value||"";
-  bigTextEl.textContent=text;
-  bigTextEl.style.fontFamily=selectedFont?`'${selectedFont}'`:'';
-  document.querySelectorAll(".sample").forEach(p=>{p.textContent=text;});
+  const selectedEnglishOnly=ENGLISH_ONLY_FONTS.has(selectedFont);
+  const selectedUnsupported=selectedEnglishOnly&&containsChinese(text);
+  bigTextEl.textContent=selectedUnsupported?"此字體僅支援英文字母":text;
+  bigTextEl.style.fontFamily=selectedUnsupported?'system-ui':(selectedFont?`'${selectedFont}'`:'');
+  document.querySelectorAll(".sample").forEach(p=>{
+    const unsupported=p.closest(".card")?.dataset.englishOnly==="true"&&containsChinese(text);
+    p.textContent=unsupported?"此字體僅支援英文字母":text;
+    p.classList.toggle("unsupported",unsupported);
+  });
 }
 
 function setSelectedFont(fontName){
@@ -461,8 +472,9 @@ function buildCards(){
   grid.innerHTML="";
   FONT_LIST.forEach(f=>{
     const card=document.createElement("div");
-    card.className="card";card.setAttribute("data-font",f.name);
-    card.innerHTML=`<div class="cardTop"><div class="fontName">${f.name}</div></div><div class="sample" style="font-family:'${f.name}'"></div><div class="cardBtns"><button type="button">選用此字體預覽</button></div>`;
+    card.className="card";card.setAttribute("data-font",f.name);card.dataset.englishOnly=f.englishOnly?"true":"false";
+    const badge=f.englishOnly?`<span class="fontBadge">僅支援英文</span>`:"";
+    card.innerHTML=`<div class="cardTop"><div class="fontName">${f.name}${badge}</div></div><div class="sample" style="font-family:'${f.name}'"></div><div class="cardBtns"><button type="button">選用此字體預覽</button></div>`;
     card.querySelector("button").addEventListener("click",()=>setSelectedFont(f.name));
     grid.appendChild(card);
   });
