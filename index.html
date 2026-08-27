@@ -101,20 +101,6 @@ textarea{min-height:80px;resize:vertical;}
 .inline label{font-weight:500;cursor:pointer;color:#1a0f35;}
 .inline input{transform:translateY(1px);accent-color:var(--primary-btn);}
 
-.ink-group{display:flex;gap:10px;flex-wrap:wrap;margin-top:4px;}
-.ink-card{flex:1;min-width:180px;position:relative;cursor:pointer;}
-.ink-card input{position:absolute;opacity:0;cursor:pointer;}
-.ink-body{
-  border:1.5px solid var(--border2);background:#ffffff;border-radius:12px;
-  padding:12px;text-align:center;transition:.2s;display:flex;flex-direction:column;gap:4px;
-}
-.ink-body strong{font-size:16px;color:#1a0f35;}
-.ink-body span{font-size:12px;color:#5a3d8a;}
-.ink-card input:checked+.ink-body{border-color:var(--primary);background:#f0e8ff;box-shadow:0 4px 14px rgba(155,111,221,.3);}
-.ink-card input:checked+.ink-body strong{color:#3D1A6B;}
-.ink-card.danger input:checked+.ink-body{border-color:#C060A0;background:#fff0f8;}
-.ink-card.danger input:checked+.ink-body strong{color:#9B2260;}
-
 .rowActions{margin-top:20px;display:flex;flex-direction:column;gap:14px;}
 .status{
   font-weight:700;background:var(--panel);border:1px solid var(--border2);
@@ -188,8 +174,6 @@ button{border:0;border-radius:999px;padding:12px 20px;cursor:pointer;font-weight
 .previewTitle{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;font-weight:700;position:relative;z-index:2;color:var(--primary);}
 .bigText{margin-top:20px;min-height:90px;font-size:72px;line-height:1.2;word-break:break-word;color:var(--text);text-align:center;position:relative;z-index:2;}
 
-.indelible-warning{margin-top:10px;background:#2A1020;border:2px solid #C060A0;padding:12px 16px;border-radius:12px;font-size:14px;color:#f0a0d0;line-height:1.5;display:none;}
-.indelible-warning b{color:#ff7070;}
 
 .font-check-box{
   margin-top:8px;background:#2A0F20;border:2px dashed #C060A0;padding:12px 16px;
@@ -253,28 +237,8 @@ button{border:0;border-radius:999px;padding:12px 20px;cursor:pointer;font-weight
         </div>
 
         <div class="field">
-          <label>4️⃣ 印油種類與顏色</label>
-          <div class="ink-group">
-            <label class="ink-card">
-              <input type="radio" name="inkType" value="一般光敏印油" checked>
-              <div class="ink-body">
-                <strong>一般光敏印油</strong>
-                <span>推薦！適合紙張/好保養</span>
-              </div>
-            </label>
-            <label class="ink-card danger">
-              <input type="radio" name="inkType" value="特殊速乾不滅印油">
-              <div class="ink-body">
-                <strong>速乾不滅印油</strong>
-                <span style="color:#9B2260;font-weight:bold;">限滑面材質</span>
-              </div>
-            </label>
-          </div>
+          <label>4️⃣ 一般光敏印油顏色</label>
           <select id="ink" style="margin-top:8px;"></select>
-          <div id="indelibleWarning" class="indelible-warning">
-            ⚠️ <b>注意！不滅印油操作難度較高：</b><br>
-            因墨水具備極速乾燥特性，主要用於無法吸墨的滑面材質。若無頻繁使用或保養不當，<b>極易造成印章表面堵塞硬化報銷</b>。若您只是要蓋在一般紙張上，請務必改選「一般光敏印油」！
-          </div>
         </div>
 
         <div class="field" style="grid-column:1/-1;">
@@ -385,7 +349,6 @@ const FONT_LIST=[
 ];
 
 const generalColors=["黑色","紅色","藍色","紫色","墨綠色","微珠光金黃色(無螢光效果)"];
-const indelibleColors=["黑色","深紅色","藍色","紫色"];
 
 const shellEl=document.getElementById("shell");
 const inkEl=document.getElementById("ink");
@@ -396,7 +359,6 @@ const bigTextEl=document.getElementById("bigText");
 const grid=document.getElementById("grid");
 const toast=document.getElementById("toast");
 const copyAllBtn=document.getElementById("copyAllBtn");
-const indelibleWarning=document.getElementById("indelibleWarning");
 const fontCheckWarning=document.getElementById("fontCheckWarning");
 const liabilityCheckbox=document.getElementById("liabilityCheckbox");
 const liabilityWrapper=document.getElementById("liabilityWrapper");
@@ -414,21 +376,11 @@ async function copyToClipboard(text){
 }
 
 function getFrameValue(){const r=document.querySelector('input[name="frame"]:checked');return r?r.value:"（未選）";}
-function getInkTypeValue(){const r=document.querySelector('input[name="inkType"]:checked');return r?r.value:"一般光敏印油";}
-
-function updateInkColorOptions(type){
+function updateInkColorOptions(){
   const cur=inkEl.value;inkEl.innerHTML="";
-  const opts=type==="特殊速乾不滅印油"?indelibleColors:generalColors;
-  opts.forEach(c=>{const o=document.createElement("option");o.value=c;o.textContent=c;inkEl.appendChild(o);});
-  if(opts.includes(cur))inkEl.value=cur;else inkEl.value="黑色";
+  generalColors.forEach(c=>{const o=document.createElement("option");o.value=c;o.textContent=c;inkEl.appendChild(o);});
+  if(generalColors.includes(cur))inkEl.value=cur;else inkEl.value="黑色";
 }
-
-document.querySelectorAll('input[name="inkType"]').forEach(r=>{
-  r.addEventListener('change',(e)=>{
-    indelibleWarning.style.display=e.target.value==="特殊速乾不滅印油"?"block":"none";
-    updateInkColorOptions(e.target.value);
-  });
-});
 
 function updatePreview(){
   const text=contentEl.value||"";
@@ -493,7 +445,7 @@ liabilityCheckbox.addEventListener("change",(e)=>{
 copyAllBtn.addEventListener("click",async()=>{
   if(copyAllBtn.disabled)return;
   const noticeText="✅已確認字體顯示正常，沒有缺字、方框或混字情況。若客服有傳排版圖，將以排版圖為主；若沒有另傳，則以此預覽畫面為製作依據～蓋印時的力道、墨量、角度都會影響成品呈現，建議蓋印前可先在廢紙試蓋抓手感。彈簧式連續印章長期使用後，邊框較緊、回彈變慢是正常的機構耗損現象。商品保固提供至到貨7天鑑賞期內，超過此期間若有保養需求歡迎隨時詢問客服～";
-  const payload=`印章外殼款式／顏色：${shellEl.value||"（未填）"}\n刻印內容：${contentEl.value||"（未填）"}\n外框：${getFrameValue()}\n字體：${fontFieldEl.value||selectedFont||"（未填）"}\n印油種類：${getInkTypeValue()}\n印油顏色：${inkEl.value||"（未選）"}\n\n${noticeText}`;
+  const payload=`印章外殼款式／顏色：${shellEl.value||"（未填）"}\n刻印內容：${contentEl.value||"（未填）"}\n外框：${getFrameValue()}\n字體：${fontFieldEl.value||selectedFont||"（未填）"}\n印油種類：一般光敏印油\n印油顏色：${inkEl.value||"（未選）"}\n\n${noticeText}`;
   const ok=await copyToClipboard(payload);
   showToast(ok?"✅ 複製成功！請直接貼上回覆我們～":"複製失敗");
 });
@@ -510,7 +462,7 @@ fontFieldEl.addEventListener("input",()=>{
   fontCheckWarning.style.display=fontFieldEl.value.trim()!=""?'flex':'none';
 });
 
-updateInkColorOptions(getInkTypeValue());
+updateInkColorOptions();
 contentEl.addEventListener("input",updatePreview);
 document.querySelectorAll('input[name="frame"]').forEach(r=>r.addEventListener("change",()=>{}));
 buildCards();
