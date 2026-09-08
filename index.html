@@ -148,6 +148,27 @@ button{border:0;border-radius:999px;padding:12px 20px;cursor:pointer;font-weight
 .warranty-notice .content ul{margin:6px 0 0 0;padding-left:18px;}
 .warranty-notice .content ul li{margin-bottom:3px;}
 
+.ink-order-guide{
+  display:none;background:#24143f;border:2px solid #9B6FDD;border-radius:14px;
+  padding:16px 18px;align-items:flex-start;gap:12px;
+  box-shadow:0 8px 24px rgba(91,33,182,.18);
+}
+.ink-order-guide.show{display:flex;}
+.ink-order-guide .icon{font-size:24px;flex-shrink:0;}
+.ink-order-guide .content{font-size:14px;color:var(--text2);line-height:1.75;}
+.ink-order-guide .content strong{display:block;color:#F1E7FF;font-size:16px;margin-bottom:5px;}
+.ink-order-guide .price{color:#FFD166;font-weight:900;}
+.ink-order-guide ol{margin:7px 0 0;padding-left:20px;}
+.ink-order-guide li{margin-bottom:3px;}
+
+.textile-upgrade-notice{
+  background:linear-gradient(135deg,#251343,#321657);border:1.5px solid #9B6FDD;
+  border-radius:14px;padding:18px;color:var(--text2);font-size:14px;line-height:1.8;
+}
+.textile-upgrade-notice strong{display:block;color:#FFD166;font-size:17px;margin-bottom:7px;}
+.textile-upgrade-notice p{margin:6px 0;}
+.textile-upgrade-notice b{color:#F1E7FF;}
+
 .btnGiant{
   width:100%;background:var(--primary-btn);color:#fff;font-size:20px;padding:18px 20px;
   border-radius:16px;font-weight:900;border:2px solid var(--primary-btn2);cursor:pointer;
@@ -237,8 +258,31 @@ button{border:0;border-radius:999px;padding:12px 20px;cursor:pointer;font-weight
         </div>
 
         <div class="field">
-          <label>4️⃣ 一般光敏印油顏色</label>
+          <label for="inkType">4️⃣ 印油種類</label>
+          <select id="inkType" style="margin-top:8px;">
+            <option value="一般光敏印油">一般光敏印油｜原附3ml・不加價</option>
+            <option value="紡織印油">紡織印油｜另購5ml加59元・同單升級10ml</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="ink">5️⃣ 印油顏色</label>
           <select id="ink" style="margin-top:8px;"></select>
+        </div>
+
+        <div class="field" style="grid-column:1/-1;">
+          <div class="ink-order-guide" id="inkOrderGuide" aria-live="polite">
+            <div class="icon">🧵</div>
+            <div class="content">
+              <strong>已選擇紡織印油｜需另外加購</strong>
+              費用：下單一瓶5ml紡織印油 <span class="price">加59元</span>，與客製印章同筆訂單即可免費升級為10ml。<b>升級後只出貨10ml一瓶，不會另外附3ml一般光敏印油。</b>
+              <ol>
+                <li>回賣場將「5ml紡織印油」加入購物車，選擇與印章相同的紅色或藍色。</li>
+                <li>客製印章與5ml紡織印油必須同筆結帳。</li>
+                <li>於印章製作前，將本頁複製的完整內容貼到聊聊告知客服。</li>
+              </ol>
+            </div>
+          </div>
         </div>
 
         <div class="field" style="grid-column:1/-1;">
@@ -268,6 +312,14 @@ button{border:0;border-radius:999px;padding:12px 20px;cursor:pointer;font-weight
 
       <div class="rowActions">
         <div class="status" id="status">目前尚未選擇字體</div>
+
+        <div class="textile-upgrade-notice">
+          <strong>【印章同單升級優惠】</strong>
+          <p>紡織印油須另行加價購，印章原售價僅包含3ml一般光敏印油。</p>
+          <p>須於印章製作前透過聊聊告知「印章需使用紡織印油」，並於同筆訂單購買客製印章＋5ml紡織印油；符合以上條件，5ml紡織印油將免費升級為10ml，並取代印章原附的3ml一般光敏印油。<b>升級後只出貨10ml紡織印油1瓶，不會另外附贈3ml一般光敏印油。</b></p>
+          <p>每購買1顆客製印章限升級1瓶；超過印章數量的5ml紡織印油，仍依原下單容量出貨。</p>
+          <p><b>未事先告知或未加購5ml紡織印油者，印章一律使用並附贈一般光敏印油；恕不提供紡織印油升級。</b></p>
+        </div>
 
         <label class="liability-check" id="liabilityWrapper">
           <input type="checkbox" id="liabilityCheckbox">
@@ -349,9 +401,12 @@ const FONT_LIST=[
 ];
 
 const generalColors=["黑色","紅色","藍色","紫色","墨綠色","微珠光金黃色(無螢光效果)"];
+const textileColors=["紅色","藍色"];
 
 const shellEl=document.getElementById("shell");
+const inkTypeEl=document.getElementById("inkType");
 const inkEl=document.getElementById("ink");
+const inkOrderGuide=document.getElementById("inkOrderGuide");
 const contentEl=document.getElementById("content");
 const fontFieldEl=document.getElementById("fontField");
 const statusEl=document.getElementById("status");
@@ -378,8 +433,10 @@ async function copyToClipboard(text){
 function getFrameValue(){const r=document.querySelector('input[name="frame"]:checked');return r?r.value:"（未選）";}
 function updateInkColorOptions(){
   const cur=inkEl.value;inkEl.innerHTML="";
-  generalColors.forEach(c=>{const o=document.createElement("option");o.value=c;o.textContent=c;inkEl.appendChild(o);});
-  if(generalColors.includes(cur))inkEl.value=cur;else inkEl.value="黑色";
+  const colors=inkTypeEl.value==="紡織印油"?textileColors:generalColors;
+  colors.forEach(c=>{const o=document.createElement("option");o.value=c;o.textContent=c;inkEl.appendChild(o);});
+  if(colors.includes(cur))inkEl.value=cur;else inkEl.value=colors[0];
+  inkOrderGuide.classList.toggle("show",inkTypeEl.value==="紡織印油");
 }
 
 function updatePreview(){
@@ -445,7 +502,10 @@ liabilityCheckbox.addEventListener("change",(e)=>{
 copyAllBtn.addEventListener("click",async()=>{
   if(copyAllBtn.disabled)return;
   const noticeText="✅已確認字體顯示正常，沒有缺字、方框或混字情況。若客服有傳排版圖，將以排版圖為主；若沒有另傳，則以此預覽畫面為製作依據～蓋印時的力道、墨量、角度都會影響成品呈現，建議蓋印前可先在廢紙試蓋抓手感。彈簧式連續印章長期使用後，邊框較緊、回彈變慢是正常的機構耗損現象。商品保固提供至到貨7天鑑賞期內，超過此期間若有保養需求歡迎隨時詢問客服～";
-  const payload=`印章外殼款式／顏色：${shellEl.value||"（未填）"}\n刻印內容：${contentEl.value||"（未填）"}\n外框：${getFrameValue()}\n字體：${fontFieldEl.value||selectedFont||"（未填）"}\n印油種類：一般光敏印油\n印油顏色：${inkEl.value||"（未選）"}\n\n${noticeText}`;
+  const textileOrderText=inkTypeEl.value==="紡織印油"
+    ?"\n紡織印油加購確認：我知道需於同筆訂單另購5ml紡織印油59元，符合條件將升級為10ml並取代原附3ml一般光敏印油；升級後只出貨10ml紡織印油1瓶，不會另外附3ml一般光敏印油。"
+    :"";
+  const payload=`印章外殼款式／顏色：${shellEl.value||"（未填）"}\n刻印內容：${contentEl.value||"（未填）"}\n外框：${getFrameValue()}\n字體：${fontFieldEl.value||selectedFont||"（未填）"}\n印油種類：${inkTypeEl.value||"（未選）"}\n印油顏色：${inkEl.value||"（未選）"}${textileOrderText}\n\n${noticeText}`;
   const ok=await copyToClipboard(payload);
   showToast(ok?"✅ 複製成功！請直接貼上回覆我們～":"複製失敗");
 });
@@ -463,6 +523,7 @@ fontFieldEl.addEventListener("input",()=>{
 });
 
 updateInkColorOptions();
+inkTypeEl.addEventListener("change",updateInkColorOptions);
 contentEl.addEventListener("input",updatePreview);
 document.querySelectorAll('input[name="frame"]').forEach(r=>r.addEventListener("change",()=>{}));
 buildCards();
