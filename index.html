@@ -239,6 +239,14 @@ button{border:0;border-radius:999px;padding:12px 20px;cursor:pointer;font-weight
 
 .brand-footer{text-align:center;padding:32px 16px;margin-top:20px;color:var(--text3);font-size:13px;line-height:1.8;}
 .brand-footer p{margin:0;}
+
+.font-size-notice{background:#fff4dc;color:#422b12;border:3px solid #e7aa38;border-radius:14px;padding:20px;line-height:1.8;}
+.font-size-notice h2{font-size:clamp(21px,4.5vw,26px);line-height:1.4;margin:0 0 12px;color:#8a360d;}
+.font-size-notice p{font-size:16px;margin:8px 0;}
+.font-size-notice ul{margin:10px 0;padding-left:22px;font-size:16px;}
+.font-size-notice li{margin:8px 0;}
+.font-size-notice .key{font-size:18px;font-weight:800;color:#8a360d;}
+.preview-size-caption{margin:12px 0 0;font-size:15px;line-height:1.7;color:#FFD166;text-align:center;position:relative;z-index:2;}
 </style>
 </head>
 <body>
@@ -321,11 +329,23 @@ button{border:0;border-radius:999px;padding:12px 20px;cursor:pointer;font-weight
           <p><b>未事先告知或未加購5ml紡織印油者，印章一律使用並附贈一般光敏印油；恕不提供紡織印油升級。</b></p>
         </div>
 
+        <section class="font-size-notice" aria-labelledby="fontSizeNoticeTitle">
+          <h2 id="fontSizeNoticeTitle">📐【重要】字體預覽不代表實際刻印尺寸</h2>
+          <p class="key">相同字級，不代表每個字都一樣高、一樣寬！</p>
+          <ul>
+            <li><b>所有字體皆適用：</b>不同字體、不同文字的字形與筆畫結構不同，即使設定相同字級，實際高度、寬度及視覺大小也會不同；同一款字體中的每個字，也不一定等高、等寬。</li>
+            <li><b>螢幕大小不是成品尺寸：</b>本頁僅供挑選字體風格，手機、電腦顯示的大小不代表印章實際大小。</li>
+            <li><b>實際大小依排版調整：</b>會依印章可製作範圍、字數、行數及排版需求調整；字數越多，通常需要縮小文字。</li>
+            <li><b>校稿尺寸請看標示範圍：</b>寬度、高度請依校稿圖中尺寸線所指範圍確認，並非每個字的尺寸。</li>
+          </ul>
+          <p class="key">如需指定字高、字寬、整體尺寸，或希望文字等高、等寬，請在製作前告知客服確認能否調整。</p>
+        </section>
+
         <label class="liability-check" id="liabilityWrapper">
           <input type="checkbox" id="liabilityCheckbox">
           <div class="check-text">
-            🙋‍♀️ 我已仔細檢查【主預覽區】的文字，確認字體顯示完全正常！
-            <span>（沒有缺字、沒有變方框、也沒有混入粗黑體等走鐘狀況。若因未檢查導致刻印亂碼，後果由買家承擔。）</span>
+            🙋‍♀️ 我已確認字體顯示正常，並了解預覽不代表實際刻印尺寸！
+            <span>我已檢查沒有缺字、方框或混字，並了解各字不一定等高、等寬；如有字高、字寬、整體尺寸或排版需求，會於製作前提出。</span>
           </div>
         </label>
 
@@ -335,9 +355,9 @@ button{border:0;border-radius:999px;padding:12px 20px;cursor:pointer;font-weight
             <strong>【排版確認說明】若客服傳送排版確認圖，請以排版圖為最終準確依據</strong>
             <ul>
               <li>此預覽工具僅供字體風格參考，實際排版由客服製作後傳送確認圖。</li>
-              <li>收到排版確認圖後，若有任何問題（字體不符、內容錯誤等），請<b>務必在確認前提出</b>。</li>
+              <li>收到排版確認圖後，若有任何問題（字體不符、內容錯誤、字體大小、高度、寬度或排列位置等），請<b>務必在確認前提出</b>。</li>
               <li><b>一旦回覆確認，即視為同意該排版，事後不得以「字體不對」為由要求重製。</b></li>
-              <li><b>若有傳送排版圖供您確認，則以排版圖為最終依據；若未另傳排版圖，則以本系統預覽畫面為最終依據。</b></li>
+              <li><b>若有傳送排版圖供您確認，則以排版圖為最終依據；若未另傳校稿圖，則以填寫內容及所選字體製作，實際尺寸與排列依印章規格調整。</b></li>
             </ul>
           </div>
         </div>
@@ -367,13 +387,14 @@ button{border:0;border-radius:999px;padding:12px 20px;cursor:pointer;font-weight
           </div>
         </div>
 
-        <button class="btnGiant" type="button" id="copyAllBtn" disabled>🔒 請先打勾確認字體正常，才能複製</button>
+        <button class="btnGiant" type="button" id="copyAllBtn" disabled>🔒 請先勾選確認字體及尺寸說明，才能複製</button>
       </div>
     </div>
 
     <div class="mainPreview">
       <div class="previewTitle"><div>主預覽（防截圖區）</div></div>
       <div id="bigText" class="bigText">王小明</div>
+      <p class="preview-size-caption">僅供字體風格參考｜非實際尺寸｜各字不一定等高、等寬</p>
     </div>
 
     <div class="grid" id="grid"></div>
@@ -469,7 +490,7 @@ function setSelectedFont(fontName){
 
   liabilityCheckbox.checked=false;
   copyAllBtn.disabled=true;
-  copyAllBtn.textContent="🔒 請先打勾確認字體正常，才能複製";
+  copyAllBtn.textContent="🔒 請先勾選確認字體及尺寸說明，才能複製";
   updatePreview();
 
   document.querySelectorAll(".card").forEach(c=>c.classList.remove("selected"));
@@ -495,13 +516,13 @@ liabilityCheckbox.addEventListener("change",(e)=>{
     copyAllBtn.textContent="📋 點我一鍵複製【整段填寫內容】";
   }else{
     copyAllBtn.disabled=true;
-    copyAllBtn.textContent="🔒 請先打勾確認字體正常，才能複製";
+    copyAllBtn.textContent="🔒 請先勾選確認字體及尺寸說明，才能複製";
   }
 });
 
 copyAllBtn.addEventListener("click",async()=>{
   if(copyAllBtn.disabled)return;
-  const noticeText="✅已確認字體顯示正常，沒有缺字、方框或混字情況。若客服有傳排版圖，將以排版圖為主；若沒有另傳，則以此預覽畫面為製作依據～蓋印時的力道、墨量、角度都會影響成品呈現，建議蓋印前可先在廢紙試蓋抓手感。彈簧式連續印章長期使用後，邊框較緊、回彈變慢是正常的機構耗損現象。商品保固提供至到貨7天鑑賞期內，超過此期間若有保養需求歡迎隨時詢問客服～";
+  const noticeText="✅已確認字體顯示正常，沒有缺字、方框或混字情況。我已了解預覽不代表實際刻印尺寸，不同字體及每個字的高度、寬度與視覺大小可能不同，不一定等高、等寬；實際尺寸與排列依印章規格、字數及行數調整。如有指定字高、字寬、整體尺寸或排版需求，會於製作前提出。校稿圖的尺寸依標示範圍確認，並非每個字的尺寸。若客服有傳排版圖，將以確認後的排版圖為主；若未另傳，則以填寫內容及所選字體製作，實際尺寸與排列依印章規格調整。蓋印時的力道、墨量、角度都會影響成品呈現，建議蓋印前可先在廢紙試蓋抓手感。彈簧式連續印章長期使用後，邊框較緊、回彈變慢是正常的機構耗損現象。商品保固提供至到貨7天鑑賞期內，超過此期間若有保養需求歡迎隨時詢問客服～";
   const textileOrderText=inkTypeEl.value==="紡織印油"
     ?"\n紡織印油加購確認：我知道需於同筆訂單另購5ml紡織印油59元，符合條件將升級為10ml並取代原附3ml一般光敏印油；升級後只出貨10ml紡織印油1瓶，不會另外附3ml一般光敏印油。"
     :"";
@@ -519,12 +540,13 @@ copyAllBtn.parentElement.addEventListener("click",(e)=>{
 });
 
 fontFieldEl.addEventListener("input",()=>{
+  liabilityCheckbox.checked=false;copyAllBtn.disabled=true;copyAllBtn.textContent="🔒 請先勾選確認字體及尺寸說明，才能複製";
   fontCheckWarning.style.display=fontFieldEl.value.trim()!=""?'flex':'none';
 });
 
 updateInkColorOptions();
 inkTypeEl.addEventListener("change",updateInkColorOptions);
-contentEl.addEventListener("input",updatePreview);
+contentEl.addEventListener("input",()=>{updatePreview();liabilityCheckbox.checked=false;copyAllBtn.disabled=true;copyAllBtn.textContent="🔒 請先勾選確認字體及尺寸說明，才能複製";});
 document.querySelectorAll('input[name="frame"]').forEach(r=>r.addEventListener("change",()=>{}));
 buildCards();
 updatePreview();
